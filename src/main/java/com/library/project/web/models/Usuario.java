@@ -48,25 +48,6 @@ public class Usuario {
 	@JoinColumn(name = "rol_id", referencedColumnName = "id")
 	@ManyToOne(optional = false)
 	private Rol rol;
-	
-	
-	
-
-	public Usuario() {
-	}
-
-	public Usuario(Long id, String username, String password, String nombre, String apellidoPaterno,
-			String apellidoMaterno, String numeroDoc, String correo, Rol rol) {
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.nombre = nombre;
-		this.apellidoPaterno = apellidoPaterno;
-		this.apellidoMaterno = apellidoMaterno;
-		this.numeroDoc = numeroDoc;
-		this.correo = correo;
-		this.rol = rol;
-	}
 
 	public Long getId() {
 		return id;

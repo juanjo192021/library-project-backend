@@ -32,14 +32,6 @@ public class Rol {
 	
 	@OneToMany(mappedBy = "rol")
 	private List<Usuario> usuarios;
-	
-	public Rol() {
-	}
-
-	public Rol(Long id, String rol) {
-		this.id = id;
-		this.rol = rol;
-	}
 
 	public Long getId() {
 		return id;
