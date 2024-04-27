@@ -9,21 +9,25 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "SECCIONES")
-public class Seccion {
+@Table(name = "pasillo")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Pasillo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "SECCION_ID", nullable = false)
+	@Column(name = "id", nullable = false)
 	private Long id;
 	
-	@Column(name = "NOMBRE", nullable = false)
+	@Column(name = "nombre", nullable = false)
 	private String nombre;
 	
-	@Column(name = "DESCRIPCION", nullable = false)
-	private String descripcion;
 	
-	@OneToMany(mappedBy = "seccion")
+	@OneToMany(mappedBy = "pasillo")
 	private List<Libro> libros;
 }

@@ -8,32 +8,137 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "USUARIOS")
+@Table(name = "usuario")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Usuario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "USUARIO_ID", nullable = false)
+	@Column(name = "id", nullable = false)
 	private Long id;
 	
-	@Column(name = "CODIGO", nullable = false)
-	private String codigo;
+	@Column(name = "username", nullable = false)
+	private String username;
 	
-	@Column(name = "NOMBRES", nullable = false)
-	private String nombres;
-	
-	@Column(name = "APELLIDOS", nullable = false)
-	private String apellidos;
-	
-	@Column(name = "NOMBRE_USUARIO", nullable = false)
-	private String nombreUsuario;
-	
-	@Column(name = "PASSWORD", nullable = false)
+	@Column(name = "password", nullable = false)
 	private String password;
 	
-	@JoinColumn(name = "ROL_ID", referencedColumnName = "ROL_ID")
+	@Column(name = "nombre", nullable = false)
+	private String nombre;
+	
+	@Column(name = "apellido_paterno", nullable = false)
+	private String apellidoPaterno;
+	
+	@Column(name = "apellido_materno", nullable = false)
+	private String apellidoMaterno;
+	
+	@Column(name = "numero_doc", nullable = false)
+	private String numeroDoc;
+	
+	@Column(name = "correo", nullable = false)
+	private String correo;
+	
+	@JoinColumn(name = "rol_id", referencedColumnName = "id")
 	@ManyToOne(optional = false)
 	private Rol rol;
+	
+	
+	
+
+	public Usuario() {
+	}
+
+	public Usuario(Long id, String username, String password, String nombre, String apellidoPaterno,
+			String apellidoMaterno, String numeroDoc, String correo, Rol rol) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.nombre = nombre;
+		this.apellidoPaterno = apellidoPaterno;
+		this.apellidoMaterno = apellidoMaterno;
+		this.numeroDoc = numeroDoc;
+		this.correo = correo;
+		this.rol = rol;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellidoPaterno() {
+		return apellidoPaterno;
+	}
+
+	public void setApellidoPaterno(String apellidoPaterno) {
+		this.apellidoPaterno = apellidoPaterno;
+	}
+
+	public String getApellidoMaterno() {
+		return apellidoMaterno;
+	}
+
+	public void setApellidoMaterno(String apellidoMaterno) {
+		this.apellidoMaterno = apellidoMaterno;
+	}
+
+	public String getNumeroDoc() {
+		return numeroDoc;
+	}
+
+	public void setNumeroDoc(String numeroDoc) {
+		this.numeroDoc = numeroDoc;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+	public Rol getRol() {
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
+	
+	
 }

@@ -4,8 +4,6 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,45 +14,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "rol")
+@Table(name= "genero")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Rol {
-	
+@NoArgsConstructor
+public class Genero {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
 	private Long id;
 	
-	@Column(name = "rol", nullable = false)
-	private String rol;
+	@Column(name = "nombre", nullable = false)
+	private String nombre;
 	
-	@OneToMany(mappedBy = "rol")
-	private List<Usuario> usuarios;
-	
-	public Rol() {
-	}
-
-	public Rol(Long id, String rol) {
-		this.id = id;
-		this.rol = rol;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getRol() {
-		return rol;
-	}
-
-	public void setRol(String rol) {
-		this.rol = rol;
-	}
-
+	@OneToMany(mappedBy = "genero")
+	private List<Autor> autores;
 }

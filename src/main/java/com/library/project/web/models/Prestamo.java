@@ -14,36 +14,43 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "PRESTAMOS")
+@Table(name = "prestamo")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Prestamo {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "PRESTAMO_ID", nullable = false)
+	@Column(name = "id", nullable = false)
 	private Long id;
 	
-	@Column(name = "ESTADO", nullable = false)
+	@Column(name = "estado", nullable = false)
 	private int estado;
 	
-	@Column(name = "FECHA_PRESTAMO", nullable = false)
+	@Column(name = "fecha_prestamo", nullable = false)
 	private Date fechaPrestamo;
 	
-	@Column(name = "FECHA_DEVOLUCION", nullable = false)
+	@Column(name = "fecha_devolucion", nullable = false)
 	private Date fechaDevoilucion;
 	
-	@Column(name = "CANTIDAD", nullable = false)
-	private int Cantidad;
+	@Column(name = "cantidad", nullable = false)
+	private int cantidad;
 	
-	@JoinColumn(name = "USUARIO_ID", referencedColumnName = "USUARIO_ID")
+	@JoinColumn(name = "usuario_id", referencedColumnName = "id")
 	@ManyToOne(optional = false)
 	private Usuario usuario;
 	
 	@JoinTable(
-			name = "REL_PRESTAMOS_LIBROS",
-			joinColumns = @JoinColumn(name = "PRESTAMOS_ID", nullable = false),
-			inverseJoinColumns = @JoinColumn(name="LIBROS_ID", nullable = false))
+			name = "detalle_prestamo",
+			joinColumns = @JoinColumn(name = "prestamo_id", nullable = false),
+			inverseJoinColumns = @JoinColumn(name="libro_id", nullable = false))
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Libro> libros;
+	
 }
