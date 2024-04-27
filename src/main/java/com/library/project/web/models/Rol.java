@@ -30,8 +30,6 @@ public class Rol {
 	@Column(name = "rol", nullable = false)
 	private String rol;
 	
-	@OneToMany(mappedBy = "rol")
-	private List<Usuario> usuarios;
 
 	public Long getId() {
 		return id;
@@ -39,14 +37,6 @@ public class Rol {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getRol() {
-		return rol;
-	}
-
-	public void setRol(String rol) {
-		this.rol = rol;
 	}
 
 }
