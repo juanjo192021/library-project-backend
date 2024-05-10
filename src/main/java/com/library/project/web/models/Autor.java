@@ -8,15 +8,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="autor")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Autor {
 	
 	@Id
@@ -33,4 +27,48 @@ public class Autor {
 	@ManyToOne
 	@JoinColumn(name = "genero_id", referencedColumnName = "id")
 	private Genero genero;
+
+	public Autor() {
+	}
+
+	public Autor(Long id, String nombre, String apellido, Genero genero) {
+		this.id = id;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.genero = genero;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public Genero getGenero() {
+		return genero;
+	}
+
+	public void setGenero(Genero genero) {
+		this.genero = genero;
+	}
+	
+	
 }

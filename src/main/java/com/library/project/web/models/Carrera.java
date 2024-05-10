@@ -13,28 +13,28 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name= "genero")
-public class Genero {
+@Table(name="carrera")
+public class Carrera {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
 	private Long id;
 	
-	@Column(name = "nombre", nullable = false)
-	private String nombre;
+	@Column(name = "facultad", nullable = false)
+	private String facultad;
 	
-	@OneToMany(mappedBy = "genero")
+	@OneToMany(mappedBy = "carrera")
 	@JsonIgnore
-	private List<Autor> autores;
+	private List<Estudiante> estudiantes;
 
-	public Genero() {
+	public Carrera() {
 	}
 
-	public Genero(Long id, String nombre, List<Autor> autores) {
+	public Carrera(Long id, String facultad, List<Estudiante> estudiantes) {
 		this.id = id;
-		this.nombre = nombre;
-		this.autores = autores;
+		this.facultad = facultad;
+		this.estudiantes = estudiantes;
 	}
 
 	public Long getId() {
@@ -45,20 +45,19 @@ public class Genero {
 		this.id = id;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getFacultad() {
+		return facultad;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setFacultad(String facultad) {
+		this.facultad = facultad;
 	}
 
-	public List<Autor> getAutores() {
-		return autores;
+	public List<Estudiante> getEstudiantes() {
+		return estudiantes;
 	}
 
-	public void setAutores(List<Autor> autores) {
-		this.autores = autores;
+	public void setEstudiantes(List<Estudiante> estudiantes) {
+		this.estudiantes = estudiantes;
 	}
-	
 }
