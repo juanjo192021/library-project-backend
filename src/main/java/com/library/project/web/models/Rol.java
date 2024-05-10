@@ -21,8 +21,8 @@ public class Rol {
 	@Column(name = "id", nullable = false)
 	private Long id;
 	
-	@Column(name = "rol", nullable = false)
-	private String rol;
+	@Column(name = "nombre", nullable = false)
+	private String nombre;
 	
 	@OneToMany(mappedBy = "rol")
 	@JsonIgnore
@@ -31,9 +31,9 @@ public class Rol {
 	public Rol() {
 	}
 
-	public Rol(Long id, String rol, List<Usuario> usuarios) {
+	public Rol(Long id, String nombre, List<Usuario> usuarios) {
 		this.id = id;
-		this.rol = rol;
+		this.nombre = nombre;
 		this.usuarios = usuarios;
 	}
 
@@ -45,12 +45,12 @@ public class Rol {
 		this.id = id;
 	}
   
-  public String getRol() {
-		return rol;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setRol(String rol) {
-		this.rol = rol;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public List<Usuario> getUsuarios() {
