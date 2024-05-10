@@ -1,6 +1,5 @@
 package com.library.project.web.models;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,19 +10,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "usuario")
-public class Usuario {
-	
+@Table(name="estudiante")
+public class Estudiante {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
 	private Long id;
-	
-	@Column(name = "username", nullable = false)
-	private String username;
-	
-	@Column(name = "password", nullable = false)
-	private String password;
 	
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
@@ -40,24 +33,26 @@ public class Usuario {
 	@Column(name = "correo", nullable = false)
 	private String correo;
 	
+	@Column(name = "cod_estudiante", nullable = false)
+	private String codEstudiante;
+	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "rol_id", referencedColumnName = "id")
-	private Rol rol;
+	@JoinColumn(name = "carrera_id", referencedColumnName = "id")
+	private Carrera carrera;
 
-	public Usuario() {
+	public Estudiante() {
 	}
 
-	public Usuario(Long id, String username, String password, String nombre, String apellidoPaterno,
-			String apellidoMaterno, String numeroDoc, String correo, Rol rol) {
+	public Estudiante(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String numeroDoc,
+			String correo, String codEstudiante, Carrera carrera) {
 		this.id = id;
-		this.username = username;
-		this.password = password;
 		this.nombre = nombre;
 		this.apellidoPaterno = apellidoPaterno;
 		this.apellidoMaterno = apellidoMaterno;
 		this.numeroDoc = numeroDoc;
 		this.correo = correo;
-		this.rol = rol;
+		this.codEstudiante = codEstudiante;
+		this.carrera = carrera;
 	}
 
 	public Long getId() {
@@ -66,22 +61,6 @@ public class Usuario {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getNombre() {
@@ -124,12 +103,19 @@ public class Usuario {
 		this.correo = correo;
 	}
 
-	public Rol getRol() {
-		return rol;
+	public String getCodEstudiante() {
+		return codEstudiante;
 	}
 
-	public void setRol(Rol rol) {
-		this.rol = rol;
+	public void setCodEstudiante(String codEstudiante) {
+		this.codEstudiante = codEstudiante;
 	}
-	
+
+	public Carrera getCarrera() {
+		return carrera;
+	}
+
+	public void setCarrera(Carrera carrera) {
+		this.carrera = carrera;
+	}
 }

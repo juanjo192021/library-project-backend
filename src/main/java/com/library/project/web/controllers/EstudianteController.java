@@ -10,30 +10,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.library.project.web.services.IUsuarioService;
+import com.library.project.web.models.Estudiante;
+import com.library.project.web.services.IEstudianteService;
 
 import lombok.RequiredArgsConstructor;
 
-import com.library.project.web.models.Usuario;
-
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/Usuarios")
-public class UsuarioController {
-	
+@RequestMapping("/Estudiantes")
+public class EstudianteController {
+
 	@Autowired
-	private IUsuarioService usuarioServiceImpl;
+	private IEstudianteService estudianteServiceImpl;
 	
-	@GetMapping("/getAllUsuarios")
-	public ResponseEntity<Object> getAllUsuarios() {
+	@GetMapping("/getAllEstudiantes")
+	public ResponseEntity<Object> getAllEstudiantes() {
 		try {
 			
-			List<Usuario> response = this.usuarioServiceImpl.getListUsuarios();
+			List<Estudiante> response = this.estudianteServiceImpl.getListEstudiantes();
 			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 		}catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
 					.body(e.getLocalizedMessage());
 		}
 	}
-
 }
