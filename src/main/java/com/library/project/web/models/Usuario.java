@@ -43,8 +43,8 @@ public class Usuario {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "rol_id", referencedColumnName = "id")
 	private Rol rol;
-
-	public Usuario() {
+  
+  public Usuario() {
 	}
 
 	public Usuario(Long id, String username, String password, String nombre, String apellidoPaterno,

@@ -44,8 +44,8 @@ public class Rol {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public String getRol() {
+  
+  public String getRol() {
 		return rol;
 	}
 
@@ -60,5 +60,5 @@ public class Rol {
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
-	
+
 }
