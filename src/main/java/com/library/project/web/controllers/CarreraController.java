@@ -17,13 +17,13 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/Carreras")
+@RequestMapping("/api/carreras")
 public class CarreraController {
 
 	@Autowired
 	private ICarreraService carreraServiceImpl;
 	
-	@GetMapping("/getAllCarreras")
+	@GetMapping("/listarCarreras")
 	public ResponseEntity<Object> getAllCarreras() {
 		try {
 			

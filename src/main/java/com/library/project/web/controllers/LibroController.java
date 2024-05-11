@@ -17,13 +17,13 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/Libros")
+@RequestMapping("/api/libros")
 public class LibroController {
 	
 	@Autowired
 	private ILibroService libroService;
 	
-	@GetMapping("/getAllLibros")
+	@GetMapping("/listarLibros")
 	public ResponseEntity<Object> getAllLibros() {
 		try {
 			List<Libro> response = this.libroService.getListLibros();

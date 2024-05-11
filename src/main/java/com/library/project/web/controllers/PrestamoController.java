@@ -17,13 +17,13 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("Prestamos")
+@RequestMapping("/api/prestamos")
 public class PrestamoController {
 	
 	@Autowired
 	private IPrestamoService prestamoService;
 	
-	@GetMapping("/getAllPrestamos")
+	@GetMapping("/listarPrestamos")
 	public ResponseEntity<Object> getAllUsuarios() {
 		try {
 			List<Prestamo> response = this.prestamoService.getListPrestamos();

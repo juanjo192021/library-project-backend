@@ -18,13 +18,13 @@ import com.library.project.web.models.Usuario;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/Usuarios")
+@RequestMapping("/api/usuarios")
 public class UsuarioController {
 	
 	@Autowired
 	private IUsuarioService usuarioServiceImpl;
 	
-	@GetMapping("/getAllUsuarios")
+	@GetMapping("/listarUsuarios")
 	public ResponseEntity<Object> getAllUsuarios() {
 		try {
 			
