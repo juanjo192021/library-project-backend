@@ -29,9 +29,9 @@ public class UserLogin implements UserDetailsService{
 	@Transactional(readOnly=true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<Usuario> usuario = usuarioService.buscarPorCorreo(username);
-		System.out.print(usuario.get().getNombre());
+		System.out.print("UserLogin.java : " + usuario.get().getNombre());
 
-		if(usuario.get() == null) { 
+		if(usuario.get() == null) {
 
         	throw new UsernameNotFoundException("Username: " + username + " no existe en el sistema!");
         }

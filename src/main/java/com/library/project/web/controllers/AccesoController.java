@@ -41,14 +41,22 @@ public class AccesoController {
 		try {
 
 			Authentication authentication = this.authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getCorreo(), request.getPassword()));
-			System.out.println(authentication);
-			
+			System.out.println("AccesoController: " + authentication);
+
+			/*
+			Optional hace que retorne true o false
+
+			A container object which may or may not contain a non-null value.
+			If a value is present, isPresent() returns true.
+			If no value is present, the object is considered empty and isPresent() returns false
+
+			*/
 			Optional<Usuario> user = usuarioService.buscarPorCorreo(request.getCorreo());
 			
 			String accessToken = jwtUtil.generarToken(user.get());
-			System.out.println(accessToken);
-						
-			AuthResponse response = new AuthResponse(request.getCorreo(), accessToken);
+			System.out.println("AccesoController: " + accessToken);
+
+			AuthResponse response = new AuthResponse(user.get(), accessToken);
 			
 			return ResponseEntity.ok(response);
 			
