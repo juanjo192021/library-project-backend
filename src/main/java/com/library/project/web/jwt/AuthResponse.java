@@ -1,32 +1,34 @@
 package com.library.project.web.jwt;
 
+import com.library.project.web.models.Usuario;
+
 public class AuthResponse {
 
-	private String correo;
+	private Usuario usuario;
 	private String accessToken;
-	
-	
-	
-	public AuthResponse(String correo, String accessToken) {
-		this.correo = correo;
-		this.accessToken = accessToken;
+
+	public Usuario getUsuario() {
+		return usuario;
 	}
-	public AuthResponse() {
-		
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
-	public String getCorreo() {
-		return correo;
-	}
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
+
 	public String getAccessToken() {
 		return accessToken;
 	}
+
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
 	}
-	
-	
-	
+
+	public AuthResponse() {
+		
+	}
+
+	public AuthResponse(Usuario usuario, String accessToken) {
+		this.usuario = usuario;
+		this.accessToken = accessToken;
+	}
 }
