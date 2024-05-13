@@ -8,15 +8,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Builder;
 
 @Entity
+@Builder
 @Table(name="estudiante")
 public class Estudiante {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Long id;
+	private Integer id;
 	
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
@@ -28,38 +30,23 @@ public class Estudiante {
 	private String apellidoMaterno;
 	
 	@Column(name = "numero_documento", nullable = false)
-	private String numeroDoc;
+	private String numeroDocumento;
 	
 	@Column(name = "correo", nullable = false)
 	private String correo;
 	
 	@Column(name = "cod_estudiante", nullable = false)
-	private String codEstudiante;
+	private String codigoEstudiante;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "carrera_id", referencedColumnName = "id")
 	private Carrera carrera;
 
-	public Estudiante() {
-	}
-
-	public Estudiante(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String numeroDoc,
-			String correo, String codEstudiante, Carrera carrera) {
-		this.id = id;
-		this.nombre = nombre;
-		this.apellidoPaterno = apellidoPaterno;
-		this.apellidoMaterno = apellidoMaterno;
-		this.numeroDoc = numeroDoc;
-		this.correo = correo;
-		this.codEstudiante = codEstudiante;
-		this.carrera = carrera;
-	}
-
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -87,12 +74,12 @@ public class Estudiante {
 		this.apellidoMaterno = apellidoMaterno;
 	}
 
-	public String getNumeroDoc() {
-		return numeroDoc;
+	public String getNumeroDocumento() {
+		return numeroDocumento;
 	}
 
-	public void setNumeroDoc(String numeroDoc) {
-		this.numeroDoc = numeroDoc;
+	public void setNumeroDocumento(String numeroDocumento) {
+		this.numeroDocumento = numeroDocumento;
 	}
 
 	public String getCorreo() {
@@ -103,12 +90,12 @@ public class Estudiante {
 		this.correo = correo;
 	}
 
-	public String getCodEstudiante() {
-		return codEstudiante;
+	public String getCodigoEstudiante() {
+		return codigoEstudiante;
 	}
 
-	public void setCodEstudiante(String codEstudiante) {
-		this.codEstudiante = codEstudiante;
+	public void setCodigoEstudiante(String codigoEstudiante) {
+		this.codigoEstudiante = codigoEstudiante;
 	}
 
 	public Carrera getCarrera() {
@@ -116,6 +103,21 @@ public class Estudiante {
 	}
 
 	public void setCarrera(Carrera carrera) {
+		this.carrera = carrera;
+	}
+
+	public Estudiante() {
+	}
+
+	public Estudiante(Integer id, String nombre, String apellidoPaterno, String apellidoMaterno, String numeroDocumento,
+			String correo, String codigoEstudiante, Carrera carrera) {
+		this.id = id;
+		this.nombre = nombre;
+		this.apellidoPaterno = apellidoPaterno;
+		this.apellidoMaterno = apellidoMaterno;
+		this.numeroDocumento = numeroDocumento;
+		this.correo = correo;
+		this.codigoEstudiante = codigoEstudiante;
 		this.carrera = carrera;
 	}
 }

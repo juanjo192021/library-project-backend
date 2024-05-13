@@ -25,87 +25,80 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class JwtTokenFilter extends OncePerRequestFilter{
+public class JwtTokenFilter extends OncePerRequestFilter {
 
 	private JwtTokenUtil jwtUtil;
-	
+
 	@Autowired
-	private IUsuarioService   usuarioService;
-	
-	
-	
+	private IUsuarioService usuarioService;
+
 	public JwtTokenFilter(JwtTokenUtil jwtUtil) {
 		this.jwtUtil = jwtUtil;
 	}
 
+	@Override
+	protected void doFilterInternal(@SuppressWarnings("null") HttpServletRequest request,
+			@SuppressWarnings("null") HttpServletResponse response, @SuppressWarnings("null") FilterChain filterChain)
+			throws ServletException, IOException {
 
-	 @Override
-	    protected void doFilterInternal(HttpServletRequest request,
-	                HttpServletResponse response, FilterChain filterChain)
-	            throws ServletException, IOException {
-	 
-	        if (!hasAuthorizationBearer(request)) {
-	            filterChain.doFilter(request, response);
-	            return;
-	        }
-	 
-	        String token = getAccessToken(request);
-	 
-	        if (!jwtUtil.validateAccessToken(token)) {
-	            filterChain.doFilter(request, response);
-	            return;
-	        }
-	 
-	        setAuthenticationContext(token, request);
-	        filterChain.doFilter(request, response);
-	    }
+		if (!hasAuthorizationBearer(request)) {
+			filterChain.doFilter(request, response);
+			return;
+		}
 
-	 private boolean hasAuthorizationBearer(HttpServletRequest request) {
-	        String header = request.getHeader("Authorization");
-	        if (ObjectUtils.isEmpty(header) || !header.startsWith("Bearer")) {
-	            return false;
-	        }
-	 
-	        return true;
-	    }
-	 
-	    private String getAccessToken(HttpServletRequest request) {
-	        String header = request.getHeader("Authorization");
-	        String token = header.split(" ")[1].trim();
-	        return token;
-	    }
-	 
-	    private void setAuthenticationContext(String token, HttpServletRequest request) {
-	    	Usuario usuario= getUserDetails(token);
-	 	    	
-	    	Optional<Usuario> user = usuarioService.buscarPorCorreo(usuario.getCorreo());
-	    	
-	    
-	    	
-	    	List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-			
-	    	Rol role = user.get().getRol();
-			authorities.add(new SimpleGrantedAuthority(role.getNombre()));
+		String token = getAccessToken(request);
 
-	        UsernamePasswordAuthenticationToken
-	            authentication = new UsernamePasswordAuthenticationToken(usuario,user.get().getPassword(),authorities);
-	 
-	        authentication.setDetails(
-	                new WebAuthenticationDetailsSource().buildDetails(request));
-	 
-	        SecurityContextHolder.getContext().setAuthentication(authentication);
-	    }
-	 
-	    private Usuario getUserDetails(String token) {
-	        Usuario userDetails = new Usuario();
-	        String[] jwtSubject = jwtUtil.getSubject(token).split(",");
-	 
-	        userDetails.setId(Long.parseLong(jwtSubject[0]));
-	        userDetails.setCorreo(jwtSubject[1]);
-	 
-	        return   userDetails;
-	    }
+		if (!jwtUtil.validateAccessToken(token)) {
+			filterChain.doFilter(request, response);
+			return;
+		}
 
-	
-	
+		setAuthenticationContext(token, request);
+		filterChain.doFilter(request, response);
+	}
+
+	private boolean hasAuthorizationBearer(HttpServletRequest request) {
+		String header = request.getHeader("Authorization");
+		if (ObjectUtils.isEmpty(header) || !header.startsWith("Bearer")) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private String getAccessToken(HttpServletRequest request) {
+		String header = request.getHeader("Authorization");
+		String token = header.split(" ")[1].trim();
+		return token;
+	}
+
+	private void setAuthenticationContext(String token, HttpServletRequest request) {
+		Usuario usuario = getUserDetails(token);
+
+		Optional<Usuario> user = usuarioService.buscarPorCorreo(usuario.getCorreo());
+
+		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+
+		Rol role = user.get().getRol();
+		authorities.add(new SimpleGrantedAuthority(role.getNombre()));
+
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario,
+				user.get().getPassword(), authorities);
+
+		authentication.setDetails(
+				new WebAuthenticationDetailsSource().buildDetails(request));
+
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+	}
+
+	private Usuario getUserDetails(String token) {
+		Usuario userDetails = new Usuario();
+		String[] jwtSubject = jwtUtil.getSubject(token).split(",");
+
+		userDetails.setId(Integer.parseInt(jwtSubject[0]));
+		userDetails.setCorreo(jwtSubject[1]);
+
+		return userDetails;
+	}
+
 }

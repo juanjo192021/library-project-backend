@@ -11,8 +11,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Builder;
 
 @Entity
+@Builder
 @Table(name="carrera")
 public class Carrera {
 
@@ -21,21 +23,12 @@ public class Carrera {
 	@Column(name = "id", nullable = false)
 	private Long id;
 	
-	@Column(name = "facultad", nullable = false)
-	private String facultad;
+	@Column(name = "nombre", nullable = false)
+	private String nombre;
 	
 	@OneToMany(mappedBy = "carrera")
 	@JsonIgnore
 	private List<Estudiante> estudiantes;
-
-	public Carrera() {
-	}
-
-	public Carrera(Long id, String facultad, List<Estudiante> estudiantes) {
-		this.id = id;
-		this.facultad = facultad;
-		this.estudiantes = estudiantes;
-	}
 
 	public Long getId() {
 		return id;
@@ -45,12 +38,12 @@ public class Carrera {
 		this.id = id;
 	}
 
-	public String getFacultad() {
-		return facultad;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setFacultad(String facultad) {
-		this.facultad = facultad;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public List<Estudiante> getEstudiantes() {
@@ -58,6 +51,14 @@ public class Carrera {
 	}
 
 	public void setEstudiantes(List<Estudiante> estudiantes) {
+		this.estudiantes = estudiantes;
+	}
+
+	public Carrera(){}
+
+	public Carrera(Long id, String nombre, List<Estudiante> estudiantes) {
+		this.id = id;
+		this.nombre = nombre;
 		this.estudiantes = estudiantes;
 	}
 }

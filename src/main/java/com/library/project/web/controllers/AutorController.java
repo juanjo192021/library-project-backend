@@ -18,13 +18,13 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/autores")
+@RequestMapping("/v1/autores/")
 public class AutorController {
 	
 	@Autowired
 	private IAutorService autorServiceImpl;
 	
-	@GetMapping("/listarAutores")
+	@GetMapping("listar")
 	public ResponseEntity<Object> getAllAutores() {
 		try {
 			List<Autor> response = this.autorServiceImpl.getListAutores();

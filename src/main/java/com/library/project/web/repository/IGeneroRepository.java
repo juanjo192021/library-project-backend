@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.library.project.web.models.Genero;
 
-public interface IGeneroRepository extends JpaRepository<Genero, Long>{
+public interface IGeneroRepository extends JpaRepository<Genero, Integer>{
 
 }

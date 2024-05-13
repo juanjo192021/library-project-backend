@@ -14,27 +14,29 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Builder;
 
 @Entity
+@Builder
 @Table(name = "prestamo")
 public class Prestamo {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Long id;
+	private Integer id;
 	
 	@Column(name = "estado", nullable = false)
-	private int estado;
+	private Integer estado;
 	
 	@Column(name = "fecha_prestamo", nullable = false)
 	private Date fechaPrestamo;
 	
 	@Column(name = "fecha_devolucion", nullable = false)
-	private Date fechaDevoilucion;
+	private Date fechaDevolucion;
 	
 	@Column(name = "cantidad", nullable = false)
-	private int cantidad;
+	private Integer cantidad;
 	
 	@JoinColumn(name = "usuario_id", referencedColumnName = "id")
 	@ManyToOne(optional = false)
@@ -50,34 +52,20 @@ public class Prestamo {
 			inverseJoinColumns = @JoinColumn(name="libro_id", nullable = false))
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Libro> libros;
-	
-	public Prestamo() {
-	}
 
-	public Prestamo(Long id, int estado, Date fechaPrestamo, Date fechaDevoilucion, int cantidad, Usuario usuario,
-			List<Libro> libros) {
-		this.id = id;
-		this.estado = estado;
-		this.fechaPrestamo = fechaPrestamo;
-		this.fechaDevoilucion = fechaDevoilucion;
-		this.cantidad = cantidad;
-		this.usuario = usuario;
-		this.libros = libros;
-	}
-
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getEstado() {
+	public Integer getEstado() {
 		return estado;
 	}
 
-	public void setEstado(int estado) {
+	public void setEstado(Integer estado) {
 		this.estado = estado;
 	}
 
@@ -89,19 +77,19 @@ public class Prestamo {
 		this.fechaPrestamo = fechaPrestamo;
 	}
 
-	public Date getFechaDevoilucion() {
-		return fechaDevoilucion;
+	public Date getFechaDevolucion() {
+		return fechaDevolucion;
 	}
 
-	public void setFechaDevoilucion(Date fechaDevoilucion) {
-		this.fechaDevoilucion = fechaDevoilucion;
+	public void setFechaDevolucion(Date fechaDevolucion) {
+		this.fechaDevolucion = fechaDevolucion;
 	}
 
-	public int getCantidad() {
+	public Integer getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(int cantidad) {
+	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
 
@@ -113,6 +101,14 @@ public class Prestamo {
 		this.usuario = usuario;
 	}
 
+	public Estudiante getEstudiante() {
+		return estudiante;
+	}
+
+	public void setEstudiante(Estudiante estudiante) {
+		this.estudiante = estudiante;
+	}
+
 	public List<Libro> getLibros() {
 		return libros;
 	}
@@ -120,5 +116,18 @@ public class Prestamo {
 	public void setLibros(List<Libro> libros) {
 		this.libros = libros;
 	}
-	
+
+	public Prestamo(){}
+
+	public Prestamo(Integer id, Integer estado, Date fechaPrestamo, Date fechaDevolucion, Integer cantidad,
+			Usuario usuario, Estudiante estudiante, List<Libro> libros) {
+		this.id = id;
+		this.estado = estado;
+		this.fechaPrestamo = fechaPrestamo;
+		this.fechaDevolucion = fechaDevolucion;
+		this.cantidad = cantidad;
+		this.usuario = usuario;
+		this.estudiante = estudiante;
+		this.libros = libros;
+	}
 }

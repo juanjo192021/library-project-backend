@@ -8,41 +8,36 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Builder;
 
 @Entity
+@Builder
 @Table(name="autor")
 public class Autor {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Long id;
+	private Integer id;
 	
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
 	
-	@Column(name = "apellido", nullable = false)
-	private String apellido;
+	@Column(name = "apellido_paterno", nullable = false)
+	private String apellidoPaterno;
+
+	@Column(name = "apellido_materno", nullable = false)
+	private String apellidoMaterno;
 	
 	@ManyToOne
 	@JoinColumn(name = "genero_id", referencedColumnName = "id")
 	private Genero genero;
 
-	public Autor() {
-	}
-
-	public Autor(Long id, String nombre, String apellido, Genero genero) {
-		this.id = id;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.genero = genero;
-	}
-
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -54,12 +49,20 @@ public class Autor {
 		this.nombre = nombre;
 	}
 
-	public String getApellido() {
-		return apellido;
+	public String getApellidoPaterno() {
+		return apellidoPaterno;
 	}
 
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public void setApellidoPaterno(String apellidoPaterno) {
+		this.apellidoPaterno = apellidoPaterno;
+	}
+
+	public String getApellidoMaterno() {
+		return apellidoMaterno;
+	}
+
+	public void setApellidoMaterno(String apellidoMaterno) {
+		this.apellidoMaterno = apellidoMaterno;
 	}
 
 	public Genero getGenero() {
@@ -69,6 +72,15 @@ public class Autor {
 	public void setGenero(Genero genero) {
 		this.genero = genero;
 	}
-	
-	
+
+	public Autor (){}
+
+	public Autor(Integer id,String nombre, String apellidoPaterno, String apellidoMaterno, Genero genero) {
+		this.id = id;
+		this.nombre = nombre;
+		this.apellidoPaterno = apellidoPaterno;
+		this.apellidoMaterno = apellidoMaterno;
+		this.genero = genero;
+	}
+
 }

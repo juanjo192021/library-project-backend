@@ -11,15 +11,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Builder;
 
 @Entity
+@Builder
 @Table(name= "genero")
 public class Genero {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Long id;
+	private Integer id;
 	
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
@@ -28,20 +30,13 @@ public class Genero {
 	@JsonIgnore
 	private List<Autor> autores;
 
-	public Genero() {
-	}
+	public Genero() {}
 
-	public Genero(Long id, String nombre, List<Autor> autores) {
-		this.id = id;
-		this.nombre = nombre;
-		this.autores = autores;
-	}
-
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -60,5 +55,10 @@ public class Genero {
 	public void setAutores(List<Autor> autores) {
 		this.autores = autores;
 	}
-	
+
+	public Genero(Integer id, String nombre, List<Autor> autores) {
+		this.id = id;
+		this.nombre = nombre;
+		this.autores = autores;
+	}	
 }

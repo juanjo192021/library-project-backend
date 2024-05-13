@@ -17,13 +17,13 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/estudiantes")
+@RequestMapping("/v1/estudiantes/")
 public class EstudianteController {
 
 	@Autowired
 	private IEstudianteService estudianteServiceImpl;
 	
-	@GetMapping("/listarEstudiantes")
+	@GetMapping("listar")
 	public ResponseEntity<Object> getAllEstudiantes() {
 		try {
 			

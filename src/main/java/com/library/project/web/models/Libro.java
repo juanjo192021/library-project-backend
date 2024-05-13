@@ -15,15 +15,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Builder;
 
 @Entity
+@Builder
 @Table(name = "libro")
 public class Libro {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Long id;
+	private Integer id;
 	
 	@Column(name = "titulo", nullable = false)
 	private String titulo;
@@ -31,8 +33,8 @@ public class Libro {
 	@Column(name = "fecha_public", nullable = false)
 	private Date fechaPublic;
 	
-	@Column(name = "cantidad", nullable = false)
-	private int cantidad;
+	@Column(name = "stock", nullable = false)
+	private Integer stock;
 	
 	@JoinColumn(name = "pasillo_id", referencedColumnName = "id")
 	@ManyToOne(optional = false)
@@ -46,25 +48,12 @@ public class Libro {
 	@JsonIgnore
 	private List<Prestamo> prestamos;
 
-	public Libro() {
-	}
-
-	public Libro(Long id, String titulo, Date fechaPublic, int cantidad, Pasillo pasillo, Genero genero,
-			List<Prestamo> prestamos) {
-		this.id = id;
-		this.titulo = titulo;
-		this.fechaPublic = fechaPublic;
-		this.cantidad = cantidad;
-		this.pasillo = pasillo;
-		this.genero = genero;
-		this.prestamos = prestamos;
-	}
-
-	public Long getId() {
+	
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -84,12 +73,12 @@ public class Libro {
 		this.fechaPublic = fechaPublic;
 	}
 
-	public int getCantidad() {
-		return cantidad;
+	public Integer getStock() {
+		return stock;
 	}
 
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
+	public void setStock(Integer stock) {
+		this.stock = stock;
 	}
 
 	public Pasillo getPasillo() {
@@ -115,5 +104,17 @@ public class Libro {
 	public void setPrestamos(List<Prestamo> prestamos) {
 		this.prestamos = prestamos;
 	}
-	
+
+	public Libro() {}
+
+	public Libro(Integer id, String titulo, Date fechaPublic, Integer stock, Pasillo pasillo, Genero genero,
+			List<Prestamo> prestamos) {
+		this.id = id;
+		this.titulo = titulo;
+		this.fechaPublic = fechaPublic;
+		this.stock = stock;
+		this.pasillo = pasillo;
+		this.genero = genero;
+		this.prestamos = prestamos;
+	}
 }

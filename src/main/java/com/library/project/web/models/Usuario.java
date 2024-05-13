@@ -18,12 +18,12 @@ import lombok.Builder;
 @Table(name = "usuario")
 public class Usuario implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
-	
+	//private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Long id;
+	private Integer id;
 	
 	@Column(name = "username", nullable = false)
 	private String username;
@@ -35,13 +35,13 @@ public class Usuario implements Serializable {
 	private String nombre;
 	
 	@Column(name = "apellido_paterno", nullable = false)
-	private String apellidoPaterno;
+	private String apellido_paterno;
 	
 	@Column(name = "apellido_materno", nullable = false)
-	private String apellidoMaterno;
+	private String apellido_materno;
 	
 	@Column(name = "numero_documento", nullable = false)
-	private String numeroDoc;
+	private String numero_documento;
 	
 	@Column(name = "correo", nullable = false)
 	private String correo;
@@ -49,28 +49,12 @@ public class Usuario implements Serializable {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "rol_id", referencedColumnName = "id")
 	private Rol rol;
-  
-  public Usuario() {
-	}
 
-	public Usuario(Long id, String username, String password, String nombre, String apellidoPaterno,
-			String apellidoMaterno, String numeroDoc, String correo, Rol rol) {
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.nombre = nombre;
-		this.apellidoPaterno = apellidoPaterno;
-		this.apellidoMaterno = apellidoMaterno;
-		this.numeroDoc = numeroDoc;
-		this.correo = correo;
-		this.rol = rol;
-	}
-
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -98,28 +82,28 @@ public class Usuario implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public String getApellidoPaterno() {
-		return apellidoPaterno;
+	public String getApellido_paterno() {
+		return apellido_paterno;
 	}
 
-	public void setApellidoPaterno(String apellidoPaterno) {
-		this.apellidoPaterno = apellidoPaterno;
+	public void setApellido_paterno(String apellido_paterno) {
+		this.apellido_paterno = apellido_paterno;
 	}
 
-	public String getApellidoMaterno() {
-		return apellidoMaterno;
+	public String getApellido_materno() {
+		return apellido_materno;
 	}
 
-	public void setApellidoMaterno(String apellidoMaterno) {
-		this.apellidoMaterno = apellidoMaterno;
+	public void setApellido_materno(String apellido_materno) {
+		this.apellido_materno = apellido_materno;
 	}
 
-	public String getNumeroDoc() {
-		return numeroDoc;
+	public String getNumero_documento() {
+		return numero_documento;
 	}
 
-	public void setNumeroDoc(String numeroDoc) {
-		this.numeroDoc = numeroDoc;
+	public void setNumero_documento(String numero_documento) {
+		this.numero_documento = numero_documento;
 	}
 
 	public String getCorreo() {
@@ -137,5 +121,19 @@ public class Usuario implements Serializable {
 	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
-	
+
+	public Usuario (){}
+
+	public Usuario(Integer id, String username, String password, String nombre, String apellido_paterno, String apellido_materno,
+			String numero_documento, String correo, Rol rol) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.nombre = nombre;
+		this.apellido_paterno = apellido_paterno;
+		this.apellido_materno = apellido_materno;
+		this.numero_documento = numero_documento;
+		this.correo = correo;
+		this.rol = rol;
+	}
 }

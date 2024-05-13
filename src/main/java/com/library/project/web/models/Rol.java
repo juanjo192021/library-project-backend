@@ -11,15 +11,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Builder;
 
 @Entity
+@Builder
 @Table(name = "rol")
 public class Rol {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Long id;
+	private Integer id;
 	
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
@@ -27,24 +29,15 @@ public class Rol {
 	@OneToMany(mappedBy = "rol")
 	@JsonIgnore
 	private List<Usuario> usuarios;
-	
-	public Rol() {
-	}
 
-	public Rol(Long id, String nombre, List<Usuario> usuarios) {
-		this.id = id;
-		this.nombre = nombre;
-		this.usuarios = usuarios;
-	}
-
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-  
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -60,5 +53,12 @@ public class Rol {
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
+	
+	public Rol(){}
 
+	public Rol(Integer id, String nombre, List<Usuario> usuarios) {
+		this.id = id;
+		this.nombre = nombre;
+		this.usuarios = usuarios;
+	}
 }

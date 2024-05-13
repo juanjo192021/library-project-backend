@@ -11,14 +11,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Builder;
 
 @Entity
+@Builder
 @Table(name = "pasillo")
 public class Pasillo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Long id;
+	private Integer id;
 	
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
@@ -27,20 +29,11 @@ public class Pasillo {
 	@JsonIgnore
 	private List<Libro> libros;
 
-	public Pasillo() {
-	}
-
-	public Pasillo(Long id, String nombre, List<Libro> libros) {
-		this.id = id;
-		this.nombre = nombre;
-		this.libros = libros;
-	}
-
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -59,5 +52,13 @@ public class Pasillo {
 	public void setLibros(List<Libro> libros) {
 		this.libros = libros;
 	}
-	
+
+	public Pasillo() {
+	}
+
+	public Pasillo(Integer id, String nombre, List<Libro> libros) {
+		this.id = id;
+		this.nombre = nombre;
+		this.libros = libros;
+	}
 }

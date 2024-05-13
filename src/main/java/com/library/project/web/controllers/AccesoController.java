@@ -23,7 +23,7 @@ import com.library.project.web.services.IUsuarioService;
 
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/v1/auth/")
 public class AccesoController {
 	
 	@Autowired
@@ -35,7 +35,7 @@ public class AccesoController {
 	@Autowired
 	private IUsuarioService usuarioService;
 	
-	@PostMapping("/login")
+	@PostMapping("login")
 	public ResponseEntity<?> login(@RequestBody AuthRequest request)
 	{
 		try {

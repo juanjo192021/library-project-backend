@@ -17,13 +17,13 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/generos")
+@RequestMapping("/v1/generos/")
 public class GeneroController {
 	
 	@Autowired
 	private IGeneroService generoServiceImpl;
 	
-	@GetMapping("/listarGeneros")
+	@GetMapping("listar")
 	public ResponseEntity<Object> getAllGeneros() {
 		try {
 			List<Genero> response = this.generoServiceImpl.getListGeneros();

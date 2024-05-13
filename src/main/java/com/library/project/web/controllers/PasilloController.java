@@ -18,13 +18,13 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/pasillos")
+@RequestMapping("/v1/pasillos/")
 public class PasilloController {
 	
 	@Autowired
 	private IPasilloService pasilloServiceImpl;
 	
-	@GetMapping("/listarPasillos")
+	@GetMapping("/listar")
 	public ResponseEntity<Object> getAllPasillos() {
 		try {
 			List<Pasillo> response = this.pasilloServiceImpl.getListPasillo();

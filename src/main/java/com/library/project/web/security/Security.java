@@ -52,17 +52,16 @@ public class Security {
 		}).accessDeniedHandler((request, response, ex)->{response.addHeader("access_denied_reason", "not_authorized");response.sendError(403, "Access Denied");}).authenticationEntryPoint((request, response, ex)->{response.addHeader("access_denied_reason", "authentication_required");response.sendError(HttpServletResponse.SC_UNAUTHORIZED);}));
 		http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 		http.authorizeHttpRequests(auth -> auth
-					.requestMatchers("/api/usuarios/listarUsuarios/**").permitAll()
-					.requestMatchers("/api/autores/listarAutores/**").permitAll()
-					.requestMatchers("/api/carreras/listarCarreras/**").permitAll()
-					.requestMatchers("/api/estudiantes/listarEstudiantes/**").permitAll()
-					.requestMatchers("/api/libros/listarLibros/**").permitAll()
-					.requestMatchers("/api/pasillos/listarPasillos/**").permitAll()
-					.requestMatchers("/api/prestamos/listarPrestamos/**").permitAll()
-					.requestMatchers("/api/generos/listarGeneros/**").permitAll()
-					.requestMatchers("/api/v1/**").permitAll()
-					.requestMatchers("/api/productos/**").hasAnyAuthority("NUEVO ROL","ROLE_ADMIN")
-					.requestMatchers("/api/pedidos/**").hasAnyAuthority("NUEVO ROL","ROLE_ADMIN")
+					.requestMatchers("/v1/usuarios/**").permitAll()
+					.requestMatchers("/v1/autores/**").permitAll()
+					.requestMatchers("/v1/carreras/**").permitAll()
+					.requestMatchers("/v1/estudiantes/**").permitAll()
+					.requestMatchers("/v1/libros/**").permitAll()
+					.requestMatchers("/v1/pasillos/**").permitAll()
+					.requestMatchers("/v1/prestamos/**").permitAll()
+					.requestMatchers("/v1/generos/**").permitAll()
+					.requestMatchers("/v1/auth/**").permitAll()
+					.requestMatchers("/v1/libros/**").hasAnyAuthority("Jefe Bibliotecario","Asistente Bibliotecario")
 					.anyRequest().authenticated());
 
 		
