@@ -66,7 +66,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 		return true;
 	}
 
-	private String getAccessToken(HttpServletRequest request) {
+	// Se cambió a public
+	public String getAccessToken(HttpServletRequest request) {
 		String header = request.getHeader("Authorization");
 		String token = header.split(" ")[1].trim();
 		return token;
@@ -91,7 +92,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 
-	private Usuario getUserDetails(String token) {
+	// Se cambió a public
+	public Usuario getUserDetails(String token) {
 		Usuario userDetails = new Usuario();
 		String[] jwtSubject = jwtUtil.getSubject(token).split(",");
 

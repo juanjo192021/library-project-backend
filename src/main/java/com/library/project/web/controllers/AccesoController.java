@@ -2,6 +2,8 @@ package com.library.project.web.controllers;
 
 import java.util.Optional;
 
+import com.library.project.web.jwt.JwtTokenFilter;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,10 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.library.project.web.jwt.AuthRequest;
 import com.library.project.web.jwt.AuthResponse;
@@ -31,6 +30,9 @@ public class AccesoController {
 	
 	@Autowired
 	private JwtTokenUtil jwtUtil;
+
+	@Autowired
+	private JwtTokenFilter jwtFilter;
 	
 	@Autowired
 	private IUsuarioService usuarioService;
@@ -62,6 +64,32 @@ public class AccesoController {
 			
 		} catch (BadCredentialsException e) {
 			
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+	}
+
+	@GetMapping("checkToken")
+	public ResponseEntity<?> checkToken(HttpServletRequest request)
+	{
+		try {
+			String token = this.jwtFilter.getAccessToken(request);
+
+			if( token == null || this.jwtUtil.validateAccessToken(token) ){
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			}
+
+			Usuario usuario = this.jwtFilter.getUserDetails(token);
+
+			Optional<Usuario> user = usuarioService.buscarPorCorreo(usuario.getCorreo());
+
+			String accessToken = jwtUtil.generarToken(user.get());
+
+			AuthResponse response = new AuthResponse(user.get(), accessToken);
+
+			return ResponseEntity.ok(response);
+
+		} catch (BadCredentialsException e) {
+
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 	}
