@@ -74,7 +74,7 @@ public class AccesoController {
 		try {
 			String token = this.jwtFilter.getAccessToken(request);
 
-			if( token == null || this.jwtUtil.validateAccessToken(token) ){
+			if( token == null || !this.jwtUtil.validateAccessToken(token) ){
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 			}
 
