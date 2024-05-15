@@ -19,4 +19,9 @@ public class GeneroServiceImpl implements IGeneroService{
 	public List<Genero> getListGeneros(){
 		return generoRepository.findAll();
 	}
+	
+	@Override
+	public Genero buscarPorId(int id) {
+		return generoRepository.findById(id).orElse(null);
+	}
 }

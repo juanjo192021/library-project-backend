@@ -61,7 +61,6 @@ public class Security {
 					.requestMatchers("/v1/prestamos/**").permitAll()
 					.requestMatchers("/v1/generos/**").permitAll()
 					.requestMatchers("/v1/auth/**").permitAll()
-					.requestMatchers("/v1/libros/**").hasAnyAuthority("Jefe Bibliotecario","Asistente Bibliotecario")
 					.anyRequest().authenticated());
 
 		

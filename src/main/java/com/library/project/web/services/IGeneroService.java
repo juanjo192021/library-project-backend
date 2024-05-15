@@ -8,4 +8,6 @@ public interface IGeneroService {
 
 	public List<Genero> getListGeneros();
 
+	public Genero buscarPorId(int id);
+
 }

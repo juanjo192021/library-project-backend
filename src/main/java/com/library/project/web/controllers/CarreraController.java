@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/carreras/")
+@RequestMapping("/v1/carreras/")
 public class CarreraController {
 
 	@Autowired

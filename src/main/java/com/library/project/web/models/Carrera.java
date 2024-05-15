@@ -21,7 +21,7 @@ public class Carrera {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Long id;
+	private Integer id;
 	
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
@@ -30,11 +30,11 @@ public class Carrera {
 	@JsonIgnore
 	private List<Estudiante> estudiantes;
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -53,12 +53,6 @@ public class Carrera {
 	public void setEstudiantes(List<Estudiante> estudiantes) {
 		this.estudiantes = estudiantes;
 	}
-
-	public Carrera(){}
-
-	public Carrera(Long id, String nombre, List<Estudiante> estudiantes) {
-		this.id = id;
-		this.nombre = nombre;
-		this.estudiantes = estudiantes;
-	}
+	
+	
 }

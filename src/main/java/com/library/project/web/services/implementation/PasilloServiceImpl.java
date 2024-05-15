@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.library.project.web.models.Genero;
 import com.library.project.web.models.Pasillo;
 import com.library.project.web.repository.IPasilloRepository;
 import com.library.project.web.services.IPasilloService;
@@ -18,5 +19,10 @@ public class PasilloServiceImpl implements IPasilloService {
 	@Override
 	public List<Pasillo> getListPasillo(){
 		return pasilloRepository.findAll();
+	}
+	
+	@Override
+	public Pasillo buscarPorId(int id) {
+		return pasilloRepository.findById(id).orElse(null);
 	}
 }
