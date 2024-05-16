@@ -1,5 +1,6 @@
 package com.library.project.web.models;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -14,12 +15,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Builder
+@Data
 @Table(name = "prestamo")
-public class Prestamo {
+public class Prestamo implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,82 +58,5 @@ public class Prestamo {
 			inverseJoinColumns = @JoinColumn(name="libro_id", nullable = false))
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Libro> libros;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public Integer getEstado() {
-		return estado;
-	}
-
-	public void setEstado(Integer estado) {
-		this.estado = estado;
-	}
-
-	public Date getFechaPrestamo() {
-		return fechaPrestamo;
-	}
-
-	public void setFechaPrestamo(Date fechaPrestamo) {
-		this.fechaPrestamo = fechaPrestamo;
-	}
-
-	public Date getFechaDevolucion() {
-		return fechaDevolucion;
-	}
-
-	public void setFechaDevolucion(Date fechaDevolucion) {
-		this.fechaDevolucion = fechaDevolucion;
-	}
-
-	public Integer getCantidad() {
-		return cantidad;
-	}
-
-	public void setCantidad(Integer cantidad) {
-		this.cantidad = cantidad;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public Estudiante getEstudiante() {
-		return estudiante;
-	}
-
-	public void setEstudiante(Estudiante estudiante) {
-		this.estudiante = estudiante;
-	}
-
-	public List<Libro> getLibros() {
-		return libros;
-	}
-
-	public void setLibros(List<Libro> libros) {
-		this.libros = libros;
-	}
-
-	public Prestamo(){}
-
-	public Prestamo(Integer id, Integer estado, Date fechaPrestamo, Date fechaDevolucion, Integer cantidad,
-			Usuario usuario, Estudiante estudiante, List<Libro> libros) {
-		this.id = id;
-		this.estado = estado;
-		this.fechaPrestamo = fechaPrestamo;
-		this.fechaDevolucion = fechaDevolucion;
-		this.cantidad = cantidad;
-		this.usuario = usuario;
-		this.estudiante = estudiante;
-		this.libros = libros;
-	}
+	
 }

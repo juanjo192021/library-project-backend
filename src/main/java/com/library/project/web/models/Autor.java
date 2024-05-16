@@ -1,5 +1,7 @@
 package com.library.project.web.models;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,12 +10,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Builder
+@Data
 @Table(name="autor")
-public class Autor {
+public class Autor implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,54 +40,5 @@ public class Autor {
 	@JoinColumn(name = "genero_id", referencedColumnName = "id")
 	private Genero genero;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getApellidoPaterno() {
-		return apellidoPaterno;
-	}
-
-	public void setApellidoPaterno(String apellidoPaterno) {
-		this.apellidoPaterno = apellidoPaterno;
-	}
-
-	public String getApellidoMaterno() {
-		return apellidoMaterno;
-	}
-
-	public void setApellidoMaterno(String apellidoMaterno) {
-		this.apellidoMaterno = apellidoMaterno;
-	}
-
-	public Genero getGenero() {
-		return genero;
-	}
-
-	public void setGenero(Genero genero) {
-		this.genero = genero;
-	}
-
-	public Autor (){}
-
-	public Autor(Integer id,String nombre, String apellidoPaterno, String apellidoMaterno, Genero genero) {
-		this.id = id;
-		this.nombre = nombre;
-		this.apellidoPaterno = apellidoPaterno;
-		this.apellidoMaterno = apellidoMaterno;
-		this.genero = genero;
-	}
 
 }

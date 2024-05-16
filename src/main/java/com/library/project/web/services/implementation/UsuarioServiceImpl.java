@@ -18,8 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UsuarioServiceImpl implements IUsuarioService{
 	
-	@Autowired
-	private ModelMapper mapper;
+	private ModelMapper mapper = new ModelMapper();
 
 	@Autowired
 	private IUsuarioRepository usuarioRepository;

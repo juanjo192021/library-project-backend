@@ -1,5 +1,6 @@
 package com.library.project.web.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,13 +12,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Builder
+@Data
 @Table(name= "genero")
-public class Genero {
+public class Genero implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
@@ -30,35 +36,4 @@ public class Genero {
 	@JsonIgnore
 	private List<Autor> autores;
 
-	public Genero() {}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public List<Autor> getAutores() {
-		return autores;
-	}
-
-	public void setAutores(List<Autor> autores) {
-		this.autores = autores;
-	}
-
-	public Genero(Integer id, String nombre, List<Autor> autores) {
-		this.id = id;
-		this.nombre = nombre;
-		this.autores = autores;
-	}	
 }

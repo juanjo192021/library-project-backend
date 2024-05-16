@@ -10,9 +10,9 @@ public interface ILibroService {
 
 	public List<Libro> getListLibros();
 
-	public LibroDTO buscarPorId(int id);
-
 	public LibroDTO guardar(LibroSaveDTO libro);
 
 	public void eliminar(Integer id);
+
+	public LibroDTO buscarPorId(Integer id);
 }

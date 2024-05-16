@@ -1,5 +1,6 @@
 package com.library.project.web.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,12 +12,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Builder
+@Data
 @Table(name = "rol")
-public class Rol {
+public class Rol implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,35 +36,4 @@ public class Rol {
 	@JsonIgnore
 	private List<Usuario> usuarios;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public List<Usuario> getUsuarios() {
-		return usuarios;
-	}
-
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
-	}
-	
-	public Rol(){}
-
-	public Rol(Integer id, String nombre, List<Usuario> usuarios) {
-		this.id = id;
-		this.nombre = nombre;
-		this.usuarios = usuarios;
-	}
 }

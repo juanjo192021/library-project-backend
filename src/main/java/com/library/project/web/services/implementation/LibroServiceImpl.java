@@ -7,10 +7,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.library.project.web.models.Genero;
+import com.library.project.web.models.Autor;
 import com.library.project.web.models.Libro;
 import com.library.project.web.models.Pasillo;
-import com.library.project.web.repository.IGeneroRepository;
+import com.library.project.web.repository.IAutorRepository;
 import com.library.project.web.repository.ILibroRepository;
 import com.library.project.web.repository.IPasilloRepository;
 import com.library.project.web.services.ILibroService;
@@ -20,14 +20,13 @@ import com.library.project.web.services.dto.LibroSaveDTO;
 @Service
 public class LibroServiceImpl implements ILibroService{
 	
-	@Autowired
-	private ModelMapper mapper;
+	private ModelMapper mapper = new ModelMapper();
 	
 	@Autowired
 	private ILibroRepository libroRepository;
 	
 	@Autowired
-	private IGeneroRepository generoRepository;
+	private IAutorRepository autorRepository;
 	
 	@Autowired
 	private IPasilloRepository pasilloRepository;
@@ -38,7 +37,7 @@ public class LibroServiceImpl implements ILibroService{
 	}
 	
 	@Override
-	public LibroDTO buscarPorId(int id) {
+	public LibroDTO buscarPorId(Integer id) {
 		Libro libro =  libroRepository.findById(id).orElse(null);
 		LibroDTO libroDTO = mapper.map(libro, LibroDTO.class);
 		
@@ -49,17 +48,21 @@ public class LibroServiceImpl implements ILibroService{
 	public LibroDTO guardar(LibroSaveDTO libroSaveDTO) {
 		
 		Libro LibroModel = new Libro();
-		Genero generoModel = generoRepository.findById(libroSaveDTO.getGenero()).orElse(null);
+		Autor autorModel = autorRepository.findById(libroSaveDTO.getAutor()).orElse(null);
 		Pasillo pasilloModel = pasilloRepository.findById(libroSaveDTO.getPasillo()).orElse(null);
 				
 		LibroModel.setTitulo(libroSaveDTO.getTitulo());
 		LibroModel.setStock(libroSaveDTO.getStock());
-		LibroModel.setGenero(generoModel);
+		LibroModel.setAutor(autorModel);
 		LibroModel.setPasillo(pasilloModel);
 		LibroModel.setFechaPublic(new Date());
 		
 		Libro LibroSave = libroRepository.save(LibroModel);
-		LibroDTO libroDTO = mapper.map(LibroSave, LibroDTO.class);
+
+		LibroDTO libroDTO = new LibroDTO(); 
+		//LibroDTO libroDTO = mapper.map(LibroSave, LibroDTO.class);
+		//libroDTO.setAutor(LibroSave.getAutor().getNombre());
+		//libroDTO.setPasillo(LibroSave.getPasillo().getNombre());
 		
 		return libroDTO;
 	}

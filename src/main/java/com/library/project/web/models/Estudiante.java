@@ -1,5 +1,7 @@
 package com.library.project.web.models;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,13 +10,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Builder
+@Data
 @Table(name="estudiante")
-public class Estudiante {
+public class Estudiante implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
@@ -42,82 +49,4 @@ public class Estudiante {
 	@JoinColumn(name = "carrera_id", referencedColumnName = "id")
 	private Carrera carrera;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getApellidoPaterno() {
-		return apellidoPaterno;
-	}
-
-	public void setApellidoPaterno(String apellidoPaterno) {
-		this.apellidoPaterno = apellidoPaterno;
-	}
-
-	public String getApellidoMaterno() {
-		return apellidoMaterno;
-	}
-
-	public void setApellidoMaterno(String apellidoMaterno) {
-		this.apellidoMaterno = apellidoMaterno;
-	}
-
-	public String getNumeroDocumento() {
-		return numeroDocumento;
-	}
-
-	public void setNumeroDocumento(String numeroDocumento) {
-		this.numeroDocumento = numeroDocumento;
-	}
-
-	public String getCorreo() {
-		return correo;
-	}
-
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
-
-	public String getCodigoEstudiante() {
-		return codigoEstudiante;
-	}
-
-	public void setCodigoEstudiante(String codigoEstudiante) {
-		this.codigoEstudiante = codigoEstudiante;
-	}
-
-	public Carrera getCarrera() {
-		return carrera;
-	}
-
-	public void setCarrera(Carrera carrera) {
-		this.carrera = carrera;
-	}
-
-	public Estudiante() {
-	}
-
-	public Estudiante(Integer id, String nombre, String apellidoPaterno, String apellidoMaterno, String numeroDocumento,
-			String correo, String codigoEstudiante, Carrera carrera) {
-		this.id = id;
-		this.nombre = nombre;
-		this.apellidoPaterno = apellidoPaterno;
-		this.apellidoMaterno = apellidoMaterno;
-		this.numeroDocumento = numeroDocumento;
-		this.correo = correo;
-		this.codigoEstudiante = codigoEstudiante;
-		this.carrera = carrera;
-	}
 }
