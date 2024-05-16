@@ -13,6 +13,6 @@ public class LibroSaveDTO implements Serializable {
 	private String titulo;
 	private Date fechaPublic;
 	private int stock;
-	private int pasillo;
-	private int autor;
+	private Long pasillo;
+	private Long autor;
 }

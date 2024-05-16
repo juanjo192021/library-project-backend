@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.library.project.web.models.Estudiante;
 
-public interface IEstudianteRepository  extends JpaRepository<Estudiante, Integer>{
+public interface IEstudianteRepository  extends JpaRepository<Estudiante, Long>{
 
 }

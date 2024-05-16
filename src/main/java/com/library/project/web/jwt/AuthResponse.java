@@ -1,34 +1,19 @@
 package com.library.project.web.jwt;
 
-import com.library.project.web.models.Usuario;
+import com.library.project.web.services.dto.UsuarioDTO;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class AuthResponse {
 
-	private Usuario usuario;
+	private UsuarioDTO usuario;
 	private String accessToken;
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public String getAccessToken() {
-		return accessToken;
-	}
-
-	public void setAccessToken(String accessToken) {
-		this.accessToken = accessToken;
-	}
-
-	public AuthResponse() {
-		
-	}
-
-	public AuthResponse(Usuario usuario, String accessToken) {
-		this.usuario = usuario;
-		this.accessToken = accessToken;
-	}
 }

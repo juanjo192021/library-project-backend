@@ -12,6 +12,6 @@ public interface IUsuarioService {
 
 	public Optional<Usuario> buscarPorCorreo(String username);
 
-	public UsuarioDTO buscarPorId(int id);
+	public UsuarioDTO buscarPorId(Long id);
 
 }

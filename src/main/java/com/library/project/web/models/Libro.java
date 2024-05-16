@@ -16,10 +16,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "libro")
 public class Libro implements Serializable{
 	
@@ -28,7 +34,7 @@ public class Libro implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Integer id;
+	private Long id;
 	
 	@Column(name = "titulo", nullable = false)
 	private String titulo;
@@ -47,8 +53,8 @@ public class Libro implements Serializable{
 	@ManyToOne(optional = false)
 	private Autor autor;
 	
-	@ManyToMany(mappedBy = "libros")
-	@JsonIgnore
-	private List<Prestamo> prestamos;
+	//@ManyToMany(mappedBy = "libros")
+	//@JsonIgnore
+	//private List<Prestamo> prestamos;
 
 }

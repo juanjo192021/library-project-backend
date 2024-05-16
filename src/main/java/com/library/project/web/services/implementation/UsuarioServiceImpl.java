@@ -34,7 +34,7 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	}
 	
 	@Override
-	public UsuarioDTO buscarPorId(int id) {
+	public UsuarioDTO buscarPorId(Long id) {
 		Usuario usuario =  usuarioRepository.findById(id).orElse(null);
 		UsuarioDTO usuarioDTO = mapper.map(usuario, UsuarioDTO.class);
 		

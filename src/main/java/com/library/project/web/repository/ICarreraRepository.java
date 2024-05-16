@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.library.project.web.models.Carrera;
 
-public interface ICarreraRepository extends JpaRepository<Carrera, Integer> {
+public interface ICarreraRepository extends JpaRepository<Carrera, Long> {
 
 }

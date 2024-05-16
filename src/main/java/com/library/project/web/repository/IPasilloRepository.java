@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.library.project.web.models.Pasillo;
 
-public interface IPasilloRepository extends JpaRepository<Pasillo, Integer>{
+public interface IPasilloRepository extends JpaRepository<Pasillo, Long>{
 
 }

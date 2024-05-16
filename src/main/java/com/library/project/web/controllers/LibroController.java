@@ -41,7 +41,7 @@ public class LibroController {
 	}
 	
 	@GetMapping("/listar/{id}")
-	public ResponseEntity<Object> usuariosId(@PathVariable Integer id) {
+	public ResponseEntity<Object> usuariosId(@PathVariable Long id) {
 		try {
 			LibroDTO response = this.libroService.buscarPorId(id);
 			

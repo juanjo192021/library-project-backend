@@ -1,6 +1,7 @@
 package com.library.project.web.models;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,7 +19,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "rol")
 public class Rol implements Serializable {
 	
@@ -27,13 +31,13 @@ public class Rol implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Integer id;
+	private Long id;
 	
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
 	
-	@OneToMany(mappedBy = "rol")
-	@JsonIgnore
-	private List<Usuario> usuarios;
+	//@OneToMany(mappedBy = "rol")
+	//@JsonIgnore
+	//private List<Usuario> usuarios;
 
 }

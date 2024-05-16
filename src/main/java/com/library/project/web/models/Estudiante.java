@@ -1,6 +1,8 @@
 package com.library.project.web.models;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +18,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name="estudiante")
 public class Estudiante implements Serializable{
 
@@ -25,7 +30,7 @@ public class Estudiante implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Integer id;
+	private Long id;
 	
 	@Column(name = "nombre", nullable = false)
 	private String nombre;

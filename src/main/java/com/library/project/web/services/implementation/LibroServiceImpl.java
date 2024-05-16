@@ -37,7 +37,7 @@ public class LibroServiceImpl implements ILibroService{
 	}
 	
 	@Override
-	public LibroDTO buscarPorId(Integer id) {
+	public LibroDTO buscarPorId(Long id) {
 		Libro libro =  libroRepository.findById(id).orElse(null);
 		LibroDTO libroDTO = mapper.map(libro, LibroDTO.class);
 		
@@ -59,16 +59,15 @@ public class LibroServiceImpl implements ILibroService{
 		
 		Libro LibroSave = libroRepository.save(LibroModel);
 
-		LibroDTO libroDTO = new LibroDTO(); 
-		//LibroDTO libroDTO = mapper.map(LibroSave, LibroDTO.class);
-		//libroDTO.setAutor(LibroSave.getAutor().getNombre());
-		//libroDTO.setPasillo(LibroSave.getPasillo().getNombre());
+		LibroDTO libroDTO = mapper.map(LibroSave, LibroDTO.class);
+		libroDTO.setAutor(LibroSave.getAutor().getNombre());
+		libroDTO.setPasillo(LibroSave.getPasillo().getNombre());
 		
 		return libroDTO;
 	}
 
 	@Override
-	public void eliminar(Integer id) {
+	public void eliminar(Long id) {
 		libroRepository.deleteById(id);	
 	}
 	

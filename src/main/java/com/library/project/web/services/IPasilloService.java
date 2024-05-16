@@ -8,6 +8,6 @@ public interface IPasilloService {
 
 	public List<Pasillo> getListPasillo();
 
-	public Pasillo buscarPorId(int id);
+	public Pasillo buscarPorId(Long id);
 
 }

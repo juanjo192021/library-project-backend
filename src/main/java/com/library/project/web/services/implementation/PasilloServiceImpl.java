@@ -22,7 +22,7 @@ public class PasilloServiceImpl implements IPasilloService {
 	}
 	
 	@Override
-	public Pasillo buscarPorId(int id) {
+	public Pasillo buscarPorId(Long id) {
 		return pasilloRepository.findById(id).orElse(null);
 	}
 }

@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.library.project.web.models.Autor;
 
-public interface IAutorRepository extends JpaRepository<Autor, Integer> {
+public interface IAutorRepository extends JpaRepository<Autor, Long> {
 
 }

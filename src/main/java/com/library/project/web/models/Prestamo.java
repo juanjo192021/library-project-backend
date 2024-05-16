@@ -21,7 +21,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "prestamo")
 public class Prestamo implements Serializable{
 	
@@ -33,7 +36,7 @@ public class Prestamo implements Serializable{
 	private Integer id;
 	
 	@Column(name = "estado", nullable = false)
-	private Integer estado;
+	private Long estado;
 	
 	@Column(name = "fecha_prestamo", nullable = false)
 	private Date fechaPrestamo;

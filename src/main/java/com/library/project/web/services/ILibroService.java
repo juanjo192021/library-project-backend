@@ -12,7 +12,7 @@ public interface ILibroService {
 
 	public LibroDTO guardar(LibroSaveDTO libro);
 
-	public void eliminar(Integer id);
+	public void eliminar(Long id);
 
-	public LibroDTO buscarPorId(Integer id);
+	public LibroDTO buscarPorId(Long id);
 }

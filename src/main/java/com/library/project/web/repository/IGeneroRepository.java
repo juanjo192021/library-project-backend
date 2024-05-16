@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.library.project.web.models.Genero;
 
-public interface IGeneroRepository extends JpaRepository<Genero, Integer>{
+public interface IGeneroRepository extends JpaRepository<Genero, Long>{
 
 }

@@ -21,7 +21,7 @@ public class GeneroServiceImpl implements IGeneroService{
 	}
 	
 	@Override
-	public Genero buscarPorId(int id) {
+	public Genero buscarPorId(Long id) {
 		return generoRepository.findById(id).orElse(null);
 	}
 }
