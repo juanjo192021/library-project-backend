@@ -62,8 +62,8 @@ public class Security {
 					.requestMatchers("/v1/generos/**").permitAll()
 					.requestMatchers("/v1/auth/**").permitAll()
 					.requestMatchers("/v1/auth/checkToken").authenticated()
-
-					.anyRequest().authenticated());
+					// Desactive el security por si me olvide que hice eso
+					.anyRequest().permitAll());
 
 		
 		return http.build();

@@ -63,6 +63,4 @@ public class LibroController {
 					.body(e.getLocalizedMessage());
 		}
 	}
-	
-
 }
