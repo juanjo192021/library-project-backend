@@ -27,35 +27,22 @@ public class AutorController {
 	private IAutorService autorService;
 	
 	@GetMapping("getAll")
-	public ResponseEntity<Object> getAllAutores() {
-		try {
-			List<Autor> response = this.autorService.getListAutores();
-			
-			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
-		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
-					.body(e.getLocalizedMessage());
-		}
+	public ResponseEntity<List<Autor>> getAllAutores() {
+		List<Autor> response = autorService.getListAutor();
+		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<?> findById(@PathVariable Long id) {
-		AutorDTO response = this.autorService.buscarPorId(id);
-		if (response == null){
-			throw new ResourceNotFoundException("autor","id",id);
-		}
+	public ResponseEntity<AutorDTO> findById(@PathVariable Long id) {
+		AutorDTO response = this.autorService.buscarPorId(id).
+				orElseThrow(() -> new ResourceNotFoundException("autor", "id", id));
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
 	@PostMapping("/save")
-	public ResponseEntity<Object> saveAutor(@RequestBody @Valid AutorSaveDTO autor) {
-		try {
-			AutorDTO response = this.autorService.guardar(autor);
-
-			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
-		}catch (Exception e) {
-			throw new BadRequestException(e.getMessage());
-		}
+	public ResponseEntity<AutorDTO> saveAutor(@RequestBody @Valid AutorSaveDTO autor) {
+		AutorDTO response = this.autorService.guardar(autor);
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
 	@PutMapping("/update")

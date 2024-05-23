@@ -10,11 +10,14 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 public class ApiResponse {
-    private String time;
+
+    private Integer status;
     private String message;
+    private String time;
     private String url;
 
-    public ApiResponse(String message, String url) {
+    public ApiResponse(Integer status,String message, String url) {
+        this.status = status;
         this.message = message;
         this.url = url.replace("uri=","");
         this.time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

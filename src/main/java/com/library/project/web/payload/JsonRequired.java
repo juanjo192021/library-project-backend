@@ -11,11 +11,13 @@ import java.util.Map;
 @NoArgsConstructor
 public class JsonRequired
 {
+    private Integer status;
     private Map<String, String> message;
     private String url;
     private String time;
 
-    public JsonRequired(Map<String, String> message, String url) {
+    public JsonRequired(Integer status,Map<String, String> message, String url) {
+        this.status = status;
         this.message = message;
         this.url = url.replace("uri=","");
         this.time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

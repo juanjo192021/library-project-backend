@@ -1,6 +1,7 @@
 package com.library.project.web.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.library.project.web.models.Autor;
 import com.library.project.web.services.dto.AutorDTO;
@@ -10,11 +11,11 @@ import com.library.project.web.services.dto.LibroDTO;
 
 public interface IAutorService {
 
-	public List<Autor> getListAutores();
+	public List<Autor> getListAutor();
 
 	public AutorDTO guardar(AutorSaveDTO autor);
 
-	public AutorDTO buscarPorId(Long id);
+	public Optional<AutorDTO> buscarPorId(Long id);
 
 	public AutorDTO delete(Long id);
 

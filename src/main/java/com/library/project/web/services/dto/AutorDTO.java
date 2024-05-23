@@ -17,5 +17,5 @@ public class AutorDTO implements Serializable {
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
-    private String genero;
+    private Genero genero;
 }
