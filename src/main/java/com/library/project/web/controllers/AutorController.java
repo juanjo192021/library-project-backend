@@ -2,7 +2,10 @@ package com.library.project.web.controllers;
 
 import java.util.List;
 
+import com.library.project.web.exception.BadRequestException;
+import com.library.project.web.exception.ResourceNotFoundException;
 import com.library.project.web.services.dto.*;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,26 +39,22 @@ public class AutorController {
 	}
 
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<Object> findById(@PathVariable Long id) {
-		try {
-			AutorDTO response = this.autorService.buscarPorId(id);
-
-			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
-		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
-					.body(e.getLocalizedMessage());
+	public ResponseEntity<?> findById(@PathVariable Long id) {
+		AutorDTO response = this.autorService.buscarPorId(id);
+		if (response == null){
+			throw new ResourceNotFoundException("autor","id",id);
 		}
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
 	@PostMapping("/save")
-	public ResponseEntity<Object> saveAutor(@RequestBody AutorSaveDTO autor) {
+	public ResponseEntity<Object> saveAutor(@RequestBody @Valid AutorSaveDTO autor) {
 		try {
 			AutorDTO response = this.autorService.guardar(autor);
 
 			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
-					.body(e.getLocalizedMessage());
+			throw new BadRequestException(e.getMessage());
 		}
 	}
 

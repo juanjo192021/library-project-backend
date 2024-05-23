@@ -37,11 +37,7 @@ public class AutorServiceImpl implements IAutorService{
 	@Override
 	public AutorDTO buscarPorId(Long id){
 		Autor autor =  autorRepository.findById(id).orElse(null);
-		if (autor == null){
-			throw new EntityNotFoundException("AUTOR NOT FOUND IN THE DATABASE");
-		}
-		AutorDTO autorDTO = mapper.map(autor, AutorDTO.class);
-		return autorDTO;
+		return autor != null ? mapper.map(autor, AutorDTO.class) : null;
 	}
 
 	@Override
