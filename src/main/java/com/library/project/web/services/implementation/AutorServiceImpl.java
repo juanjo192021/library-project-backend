@@ -45,7 +45,7 @@ public class AutorServiceImpl implements IAutorService{
 
 	@Override
 	public AutorDTO guardar(AutorSaveDTO autorSaveDTO) {
-		validarAutorSaveDTO(autorSaveDTO);
+		//validarAutorSaveDTO(autorSaveDTO);
 		verificarDuplicadoAutorSaveDTO(autorSaveDTO);
 
 		Autor autorModel = new Autor();
@@ -105,7 +105,8 @@ public class AutorServiceImpl implements IAutorService{
 		Long id = autorUpdateDTO.getId();
 		Autor autor = autorRepository.findById(id).
 				orElseThrow(() -> new ResourceNotFoundException("autor", "id", id));
-		validarAutorUpdateDTO(autorUpdateDTO);
+		//Se esta arreglando update
+		//validarAutorUpdateDTO(autorUpdateDTO);
 		verificarDuplicadoAutorUpdateDTO(autorUpdateDTO);
 		autor.setNombre(autorUpdateDTO.getNombre());
 		autor.setApellidoPaterno(autorUpdateDTO.getApellidoPaterno());

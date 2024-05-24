@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/autor/")
+@RequestMapping("/v1/autores/")
 public class AutorController {
 	
 	@Autowired
@@ -44,7 +44,7 @@ public class AutorController {
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
-	@PutMapping("/update")
+	@PatchMapping("/update")
 	public ResponseEntity<AutorDTO> updateAutor(@RequestBody AutorUpdateDTO autor) {
 		AutorDTO response = this.autorService.update(autor);
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);

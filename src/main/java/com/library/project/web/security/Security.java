@@ -53,7 +53,7 @@ public class Security {
 		http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 		http.authorizeHttpRequests(auth -> auth
 					.requestMatchers("/v1/usuarios/**").permitAll()
-					.requestMatchers("/v1/autores/**").permitAll()
+					.requestMatchers("/v1/autores/**").authenticated()
 					.requestMatchers("/v1/carreras/**").permitAll()
 					.requestMatchers("/v1/estudiantes/**").permitAll()
 					.requestMatchers("/v1/libros/**").permitAll()
@@ -62,8 +62,7 @@ public class Security {
 					.requestMatchers("/v1/generos/**").permitAll()
 					.requestMatchers("/v1/auth/**").permitAll()
 					.requestMatchers("/v1/auth/checkToken").authenticated()
-					// Desactive el security por si me olvide que hice eso
-					.anyRequest().permitAll());
+					.anyRequest().authenticated());
 
 		
 		return http.build();
