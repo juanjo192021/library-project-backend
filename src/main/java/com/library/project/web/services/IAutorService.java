@@ -15,7 +15,7 @@ public interface IAutorService {
 
 	public AutorDTO guardar(AutorSaveDTO autor);
 
-	public Optional<AutorDTO> buscarPorId(Long id);
+	public AutorDTO buscarPorId(Long id);
 
 	public AutorDTO delete(Long id);
 

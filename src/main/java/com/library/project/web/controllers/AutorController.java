@@ -34,8 +34,7 @@ public class AutorController {
 
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<AutorDTO> findById(@PathVariable Long id) {
-		AutorDTO response = this.autorService.buscarPorId(id).
-				orElseThrow(() -> new ResourceNotFoundException("autor", "id", id));
+		AutorDTO response = this.autorService.buscarPorId(id);
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
@@ -46,26 +45,14 @@ public class AutorController {
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<Object> updateAutor(@RequestBody AutorUpdateDTO autor) {
-		try {
-			AutorDTO response = this.autorService.update(autor);
-
-			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
-		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
-					.body(e.getLocalizedMessage());
-		}
+	public ResponseEntity<AutorDTO> updateAutor(@RequestBody AutorUpdateDTO autor) {
+		AutorDTO response = this.autorService.update(autor);
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Object> deleteAutor(@PathVariable Long id) {
-		try {
-			AutorDTO response = this.autorService.delete(id);
-
-			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
-		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
-					.body(e.getLocalizedMessage());
-		}
+	public ResponseEntity<AutorDTO> deleteAutor(@PathVariable Long id) {
+		AutorDTO response = this.autorService.delete(id);
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 }
