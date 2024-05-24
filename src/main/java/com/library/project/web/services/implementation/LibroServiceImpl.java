@@ -40,7 +40,6 @@ public class LibroServiceImpl implements ILibroService{
 	public LibroDTO buscarPorId(Long id) {
 		Libro libro =  libroRepository.findById(id).orElse(null);
 		LibroDTO libroDTO = mapper.map(libro, LibroDTO.class);
-		
 		return libroDTO;
 	}
 	
