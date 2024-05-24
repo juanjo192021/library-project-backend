@@ -48,7 +48,8 @@ public class AutorServiceImpl implements IAutorService{
 		checkDuplicate(autorSaveDTO);
 
 		Autor autorModel = new Autor();
-		Genero generoModel = generoRepository.findById(autorSaveDTO.getGenero()).orElse(null);
+		Genero generoModel = generoRepository.findById(autorSaveDTO.getGenero()).
+				orElseThrow(() -> new ResourceNotFoundException("genero", "id", autorSaveDTO.getGenero()));;
 		autorModel.setNombre(autorSaveDTO.getNombre());
 		autorModel.setApellidoPaterno(autorSaveDTO.getApellidoPaterno());
 		autorModel.setApellidoMaterno(autorSaveDTO.getApellidoMaterno());
