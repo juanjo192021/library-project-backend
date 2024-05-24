@@ -45,11 +45,11 @@ public class AutorServiceImpl implements IAutorService{
 
 	@Override
 	public AutorDTO guardar(AutorSaveDTO autorSaveDTO) {
-		//validarAutorSaveDTO(autorSaveDTO);
-		verificarDuplicadoAutorSaveDTO(autorSaveDTO);
+		checkDuplicate(autorSaveDTO);
 
 		Autor autorModel = new Autor();
-		Genero generoModel = generoRepository.findById(autorSaveDTO.getGenero()).orElse(null);
+		Genero generoModel = generoRepository.findById(autorSaveDTO.getGenero()).
+				orElseThrow(() -> new ResourceNotFoundException("genero", "id", autorSaveDTO.getGenero()));;
 		autorModel.setNombre(autorSaveDTO.getNombre());
 		autorModel.setApellidoPaterno(autorSaveDTO.getApellidoPaterno());
 		autorModel.setApellidoMaterno(autorSaveDTO.getApellidoMaterno());
@@ -61,25 +61,7 @@ public class AutorServiceImpl implements IAutorService{
 		return autorDTO;
 	}
 
-	private void validarAutorSaveDTO(AutorSaveDTO autorSaveDTO) {
-		List<String> format = new ArrayList<>();
-
-		if (!ValidationException.esString(autorSaveDTO.getNombre())) {
-			format.add("nombre");
-		}
-		if (!ValidationException.esString(autorSaveDTO.getApellidoPaterno())) {
-			format.add("apellido Paterno");
-		}
-		if (!ValidationException.esString(autorSaveDTO.getApellidoMaterno())) {
-			format.add("apellido Materno");
-		}
-
-		if (!format.isEmpty()) {
-			throw new ArrayListFormatException(format, "author");
-		}
-	}
-
-	private void verificarDuplicadoAutorSaveDTO(AutorSaveDTO autorSaveDTO) {
+	private void checkDuplicate(AutorSaveDTO autorSaveDTO) {
 		if (autorRepository.existsByNombre(autorSaveDTO.getNombre()) &&
 				autorRepository.existsByApellidoPaterno(autorSaveDTO.getApellidoPaterno()) &&
 				autorRepository.existsByApellidoMaterno(autorSaveDTO.getApellidoMaterno())) {
@@ -102,45 +84,17 @@ public class AutorServiceImpl implements IAutorService{
 
 	@Override
 	public AutorDTO update(AutorUpdateDTO autorUpdateDTO){
-		Long id = autorUpdateDTO.getId();
-		Autor autor = autorRepository.findById(id).
-				orElseThrow(() -> new ResourceNotFoundException("autor", "id", id));
-		//Se esta arreglando update
-		//validarAutorUpdateDTO(autorUpdateDTO);
-		verificarDuplicadoAutorUpdateDTO(autorUpdateDTO);
+		Autor autor = autorRepository.findById(autorUpdateDTO.getId()).
+				orElseThrow(() -> new ResourceNotFoundException("autor", "id", autorUpdateDTO.getId()));
+		Genero genero = generoRepository.findById(autorUpdateDTO.getGenero()).
+				orElseThrow(() -> new ResourceNotFoundException("genero", "id", autorUpdateDTO.getGenero()));
 		autor.setNombre(autorUpdateDTO.getNombre());
 		autor.setApellidoPaterno(autorUpdateDTO.getApellidoPaterno());
 		autor.setApellidoMaterno(autorUpdateDTO.getApellidoMaterno());
-		autor = this.autorRepository.save(autor);
-		return  mapper.map(autor, AutorDTO.class);
-	}
-
-	private void validarAutorUpdateDTO(AutorUpdateDTO autorUpdateDTO) {
-		List<String> format = new ArrayList<>();
-
-		if (!ValidationException.esString(autorUpdateDTO.getNombre())) {
-			format.add("nombre");
-		}
-		if (!ValidationException.esString(autorUpdateDTO.getApellidoPaterno())) {
-			format.add("apellido Paterno");
-		}
-		if (!ValidationException.esString(autorUpdateDTO.getApellidoMaterno())) {
-			format.add("apellido Materno");
-		}
-
-		if (!format.isEmpty()) {
-			throw new ArrayListFormatException(format, "author");
-		}
-	}
-
-	private void verificarDuplicadoAutorUpdateDTO(AutorUpdateDTO autorUpdateDTO) {
-		if (autorRepository.existsByNombre(autorUpdateDTO.getNombre()) &&
-				autorRepository.existsByApellidoPaterno(autorUpdateDTO.getApellidoPaterno()) &&
-				autorRepository.existsByApellidoMaterno(autorUpdateDTO.getApellidoMaterno())) {
-
-			throw new DuplicateException("author", "name", autorUpdateDTO.getNombre() + " " +
-					autorUpdateDTO.getApellidoPaterno() + " " +
-					autorUpdateDTO.getApellidoMaterno());
-		}
+		autor.setGenero(genero);
+		Autor autorUdpate = autorRepository.save(autor);
+		AutorDTO autorDTO = mapper.map(autorUdpate, AutorDTO.class);
+		autorDTO.setGenero(autorUdpate.getGenero());
+		return  autorDTO;
 	}
 }

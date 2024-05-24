@@ -11,10 +11,8 @@ public class AutorUpdateDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    @NotEmpty(message = "Required Field")
     private String nombre;
-    @NotEmpty(message = "Required Field")
     private String apellidoPaterno;
-    @NotEmpty(message = "Required Field")
     private String apellidoMaterno;
+    private Long genero;
 }
