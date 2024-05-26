@@ -29,35 +29,20 @@ public class AutorServiceImpl implements IAutorService{
 
 	@Autowired
 	private IGeneroRepository generoRepository;
-	
-	@Override
-	public List<Autor> getListAutor(){
-		return autorRepository.findAll();
-	}
 
 	@Override
-	public AutorDTO buscarPorId(Long id) {
-		Autor autor = autorRepository.findById(id).
-				orElseThrow(() -> new ResourceNotFoundException("autor", "id", id));
-		AutorDTO autorDTO = mapper.map(autor, AutorDTO.class);
-		return autorDTO;
-	}
-
-	@Override
-	public AutorDTO guardar(AutorSaveDTO autorSaveDTO) {
+	public AutorDTO save(AutorSaveDTO autorSaveDTO){
 		checkDuplicate(autorSaveDTO);
-
 		Autor autorModel = new Autor();
-		Genero generoModel = generoRepository.findById(autorSaveDTO.getGenero()).
-				orElseThrow(() -> new ResourceNotFoundException("genero", "id", autorSaveDTO.getGenero()));;
+		List<Genero> generoModel = generoRepository.findAllById(autorSaveDTO.getGenero());
 		autorModel.setNombre(autorSaveDTO.getNombre());
 		autorModel.setApellidoPaterno(autorSaveDTO.getApellidoPaterno());
 		autorModel.setApellidoMaterno(autorSaveDTO.getApellidoMaterno());
-		autorModel.setGenero(generoModel);
+		autorModel.setGeneros(generoModel);
 
 		Autor autorSave = autorRepository.save(autorModel);
 		AutorDTO autorDTO = mapper.map(autorSave, AutorDTO.class);
-		autorDTO.setGenero(autorSave.getGenero());
+		autorDTO.setGenero(generoModel);
 		return autorDTO;
 	}
 
@@ -73,12 +58,17 @@ public class AutorServiceImpl implements IAutorService{
 	}
 
 	@Override
-	public AutorDTO delete(Long id){
+	public List<Autor> getAll(){
+		return autorRepository.findAll();
+	}
+
+	@Override
+	public AutorDTO findById (Long id){
 		Autor autor = autorRepository.findById(id).
 				orElseThrow(() -> new ResourceNotFoundException("autor", "id", id));
+		List<Genero> generoModel = generoRepository.findByAutoresId(id);
 		AutorDTO autorDTO = mapper.map(autor, AutorDTO.class);
-		autorDTO.setGenero(autor.getGenero());
-		autorRepository.deleteById(id);
+		autorDTO.setGenero(generoModel);
 		return autorDTO;
 	}
 
@@ -86,15 +76,26 @@ public class AutorServiceImpl implements IAutorService{
 	public AutorDTO update(AutorUpdateDTO autorUpdateDTO){
 		Autor autor = autorRepository.findById(autorUpdateDTO.getId()).
 				orElseThrow(() -> new ResourceNotFoundException("autor", "id", autorUpdateDTO.getId()));
-		Genero genero = generoRepository.findById(autorUpdateDTO.getGenero()).
-				orElseThrow(() -> new ResourceNotFoundException("genero", "id", autorUpdateDTO.getGenero()));
+		List<Genero> generoModel = generoRepository.findAllById(autorUpdateDTO.getGenero());
 		autor.setNombre(autorUpdateDTO.getNombre());
 		autor.setApellidoPaterno(autorUpdateDTO.getApellidoPaterno());
 		autor.setApellidoMaterno(autorUpdateDTO.getApellidoMaterno());
-		autor.setGenero(genero);
-		Autor autorUdpate = autorRepository.save(autor);
-		AutorDTO autorDTO = mapper.map(autorUdpate, AutorDTO.class);
-		autorDTO.setGenero(autorUdpate.getGenero());
-		return  autorDTO;
+		autor.setGeneros(generoModel);
+		Autor autorUpdate = autorRepository.save(autor);
+		AutorDTO autorDTO = mapper.map(autorUpdate,AutorDTO.class);
+		autorDTO.setGenero(autorUpdate.getGeneros());
+		return autorDTO;
+	}
+
+	@Override
+	public AutorDTO delete(Long id){
+		Autor autor = autorRepository.findById(id).
+				orElseThrow(() -> new ResourceNotFoundException("autor", "id", id));
+		List<Genero> generoModel = generoRepository.findByAutoresId(id);
+		AutorDTO autorDTO = mapper.map(autor, AutorDTO.class);
+		autorDTO.setGenero(generoModel);
+		autorRepository.deleteDetalleAutorByAutorId(id);
+		autorRepository.deleteById(id);
+		return autorDTO;
 	}
 }

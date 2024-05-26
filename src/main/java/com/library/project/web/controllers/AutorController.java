@@ -25,22 +25,21 @@ public class AutorController {
 	
 	@Autowired
 	private IAutorService autorService;
-	
+	@PostMapping("/save")
+	public ResponseEntity<AutorDTO> saveAutor(@RequestBody AutorSaveDTO autor){
+		AutorDTO response = this.autorService.save(autor);
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+	}
+
 	@GetMapping("getAll")
-	public ResponseEntity<List<Autor>> getAllAutores() {
-		List<Autor> response = autorService.getListAutor();
+	public ResponseEntity<Object> getAllAutores() {
+		List<Autor> response = autorService.getAll();
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<AutorDTO> findById(@PathVariable Long id) {
-		AutorDTO response = this.autorService.buscarPorId(id);
-		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
-	}
-
-	@PostMapping("/save")
-	public ResponseEntity<AutorDTO> saveAutor(@RequestBody @Valid AutorSaveDTO autor) {
-		AutorDTO response = this.autorService.guardar(autor);
+		AutorDTO response = this.autorService.findById(id);
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 

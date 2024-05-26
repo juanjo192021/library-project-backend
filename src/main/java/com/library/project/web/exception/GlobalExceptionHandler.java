@@ -25,6 +25,15 @@ public class GlobalExceptionHandler {
         return  new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(DuplicateException.class)
+    public ResponseEntity<ApiResponse> handlerDuplicateException(
+            DuplicateException exception, WebRequest webRequest){
+        ApiResponse apiResponse = new ApiResponse(HttpStatus.CONFLICT.value(),exception.getMessage(),
+                webRequest.getDescription(false));
+        return  new ResponseEntity<>(apiResponse, HttpStatus.CONFLICT);
+    }
+
+    /*
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ApiResponse> handlerBadRequestException(
             BadRequestException exception, WebRequest webRequest){
@@ -41,14 +50,6 @@ public class GlobalExceptionHandler {
         return  new ResponseEntity<>(apiResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    @ExceptionHandler(DuplicateException.class)
-    public ResponseEntity<ApiResponse> handlerDuplicateException(
-            DuplicateException exception, WebRequest webRequest){
-        ApiResponse apiResponse = new ApiResponse(HttpStatus.CONFLICT.value(),exception.getMessage(),
-                webRequest.getDescription(false));
-        return  new ResponseEntity<>(apiResponse, HttpStatus.CONFLICT);
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handlerMethodArgumentNotValidException(
             MethodArgumentNotValidException exception, WebRequest webRequest){
@@ -61,5 +62,5 @@ public class GlobalExceptionHandler {
         JsonRequired jsonRequired = new JsonRequired(HttpStatus.BAD_REQUEST.value(),mapErrors,
                 webRequest.getDescription(false));
         return  new ResponseEntity<>(jsonRequired, HttpStatus.BAD_REQUEST);
-    }
+    }*/
 }

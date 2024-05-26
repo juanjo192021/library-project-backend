@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import com.library.project.web.models.Genero;
 
-public interface IGeneroRepository extends JpaRepository<Genero, Long>{
+import java.util.List;
 
+public interface IGeneroRepository extends JpaRepository<Genero, Long>{
+    List<Genero> findByAutoresId(Long id);
 }

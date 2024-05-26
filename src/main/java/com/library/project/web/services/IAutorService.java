@@ -11,13 +11,9 @@ import com.library.project.web.services.dto.LibroDTO;
 
 public interface IAutorService {
 
-	public List<Autor> getListAutor();
-
-	public AutorDTO guardar(AutorSaveDTO autor);
-
-	public AutorDTO buscarPorId(Long id);
-
-	public AutorDTO delete(Long id);
-
+	public AutorDTO save(AutorSaveDTO autor);
+	public List<Autor> getAll();
+	public AutorDTO findById(Long id);
 	public AutorDTO update(AutorUpdateDTO autor);
+	public AutorDTO delete(Long id);
 }

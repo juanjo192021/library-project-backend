@@ -52,9 +52,4 @@ public class Libro implements Serializable{
 	@JoinColumn(name = "autor_id", referencedColumnName = "id")
 	@ManyToOne(optional = false)
 	private Autor autor;
-	
-	//@ManyToMany(mappedBy = "libros")
-	//@JsonIgnore
-	//private List<Prestamo> prestamos;
-
 }
