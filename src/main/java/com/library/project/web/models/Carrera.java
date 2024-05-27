@@ -40,5 +40,4 @@ public class Carrera implements Serializable{
 	//@JsonIgnore
 	//private List<Estudiante> estudiantes;
 
-	
 }

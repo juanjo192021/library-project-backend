@@ -33,10 +33,10 @@ public class Prestamo implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Integer id;
+	private Long id;
 	
 	@Column(name = "estado", nullable = false)
-	private Long estado;
+	private int estado;
 	
 	@Column(name = "fecha_prestamo", nullable = false)
 	private Date fechaPrestamo;
@@ -45,7 +45,7 @@ public class Prestamo implements Serializable{
 	private Date fechaDevolucion;
 	
 	@Column(name = "cantidad", nullable = false)
-	private Integer cantidad;
+	private int cantidad;
 	
 	@JoinColumn(name = "usuario_id", referencedColumnName = "id")
 	@ManyToOne(optional = false)

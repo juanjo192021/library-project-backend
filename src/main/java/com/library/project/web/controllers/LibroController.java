@@ -29,7 +29,7 @@ public class LibroController {
 	private ILibroService libroService;
 	
 	@GetMapping("listar")
-	public ResponseEntity<Object> getAllLibros() {
+	public ResponseEntity<Object> listLibros() {
 		try {
 			List<Libro> response = this.libroService.getListLibros();
 			
@@ -40,8 +40,8 @@ public class LibroController {
 		}
 	}
 	
-	@GetMapping("/listar/{id}")
-	public ResponseEntity<Object> usuariosId(@PathVariable Long id) {
+	@GetMapping("/libro/{id}")
+	public ResponseEntity<Object> idLibro(@PathVariable Long id) {
 		try {
 			LibroDTO response = this.libroService.buscarPorId(id);
 			
@@ -53,7 +53,7 @@ public class LibroController {
 	}
 	
 	@PostMapping("/guardar")
-	public ResponseEntity<Object> usuariosId(@RequestBody LibroSaveDTO libro) {
+	public ResponseEntity<Object> saveUsuario(@RequestBody LibroSaveDTO libro) {
 		try {
 			LibroDTO response = this.libroService.guardar(libro);
 			

@@ -63,13 +63,12 @@ public class AccesoServiceImpl implements IAccesoService{
 			System.out.println("AccesoController: " + accessToken);
 
 			UsuarioDTO usuarioDTO = this.mapper.map(user, UsuarioDTO.class);
-			usuarioDTO.setUsuarioRol(user.getRol().getNombre());
+			usuarioDTO.setRol(user.getRol().getNombre());
 			return AuthResponse.builder().accessToken(accessToken)
 					.usuario(usuarioDTO)
 					.build();
 		}
 		return authResponse;
-		
 	}
 	
 	@Override

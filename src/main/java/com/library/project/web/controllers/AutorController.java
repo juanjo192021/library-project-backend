@@ -2,8 +2,6 @@ package com.library.project.web.controllers;
 
 import java.util.List;
 
-import com.library.project.web.exception.BadRequestException;
-import com.library.project.web.exception.ResourceNotFoundException;
 import com.library.project.web.services.dto.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,33 +24,57 @@ public class AutorController {
 	@Autowired
 	private IAutorService autorService;
 	
-	@GetMapping("getAll")
-	public ResponseEntity<List<Autor>> getAllAutores() {
+	@GetMapping("listar")
+	public ResponseEntity<Object> listAutores() {
 		List<Autor> response = autorService.getListAutor();
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
-	@GetMapping("/findById/{id}")
-	public ResponseEntity<AutorDTO> findById(@PathVariable Long id) {
-		AutorDTO response = this.autorService.buscarPorId(id);
-		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+	@GetMapping("/autor/{id}")
+	public ResponseEntity<Object> idAutor(@PathVariable Long id) {
+		try {
+			AutorDTO response = this.autorService.buscarPorId(id);
+			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+		}
+		catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
+					.body(e.getLocalizedMessage());
+		}
 	}
 
 	@PostMapping("/save")
-	public ResponseEntity<AutorDTO> saveAutor(@RequestBody @Valid AutorSaveDTO autor) {
-		AutorDTO response = this.autorService.guardar(autor);
-		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+	public ResponseEntity<Object> saveAutor(@RequestBody @Valid AutorSaveDTO autor) {
+		try {
+			AutorDTO response = this.autorService.guardar(autor);
+			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+		}
+		catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
+					.body(e.getLocalizedMessage());
+		}
 	}
 
 	@PatchMapping("/update")
-	public ResponseEntity<AutorDTO> updateAutor(@RequestBody AutorUpdateDTO autor) {
-		AutorDTO response = this.autorService.update(autor);
-		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+	public ResponseEntity<Object> updateAutor(@RequestBody AutorUpdateDTO autor) {
+		try {
+			AutorDTO response = this.autorService.update(autor);
+			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+		}
+		catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
+					.body(e.getLocalizedMessage());
+		}
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<AutorDTO> deleteAutor(@PathVariable Long id) {
-		AutorDTO response = this.autorService.delete(id);
-		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+	public ResponseEntity<Object> deleteAutor(@PathVariable Long id) {
+		try {
+			AutorDTO response = this.autorService.delete(id);
+			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+		}
+		catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
+					.body(e.getLocalizedMessage());
+		}
 	}
 }

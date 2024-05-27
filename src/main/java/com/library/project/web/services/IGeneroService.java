@@ -10,4 +10,10 @@ public interface IGeneroService {
 
 	public Genero buscarPorId(Long id);
 
+	public Genero guardar(String genero);
+
+	public void deleteGenero(Long id);
+
+	public Genero update(Genero genero);
+
 }

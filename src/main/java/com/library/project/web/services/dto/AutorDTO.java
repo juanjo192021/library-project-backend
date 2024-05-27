@@ -1,12 +1,9 @@
 package com.library.project.web.services.dto;
 
-import com.library.project.web.models.Genero;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 public class AutorDTO implements Serializable {
@@ -17,5 +14,5 @@ public class AutorDTO implements Serializable {
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
-    private Genero genero;
+    private List<String> generos;
 }

@@ -19,4 +19,29 @@ public class CarreraServiceImpl implements ICarreraService {
 	public List<Carrera> getListCarreras(){		
 		return carreraRepository.findAll();
 	}
+	
+	@Override
+	public Carrera getCarreraById(Long id) {
+        return carreraRepository.findById(id).orElse(null);
+    }
+	
+	@Override
+	public Carrera guardar(String carrera) {
+		Carrera carreraModel = Carrera.builder().nombre(carrera).build();
+		return carreraRepository.save(carreraModel);
+	}
+	
+	
+	//Parametro carrera: id = id buscado en la bd, nombre = nombre que se va a actualizar
+	@Override
+	public Carrera update(Carrera carrera) {
+		Carrera carreraModel = carreraRepository.findById(carrera.getId()).orElse(null);
+		carreraModel.setNombre(carrera.getNombre());
+		return carreraRepository.save(carreraModel);
+	}
+	
+	@Override
+	public void deleteCarrera(Long id) {
+        carreraRepository.deleteById(id);
+    }
 }

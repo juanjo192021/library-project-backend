@@ -1,6 +1,7 @@
 package com.library.project.web.services.implementation;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.library.project.web.exception.*;
 import com.library.project.web.models.Genero;
@@ -8,16 +9,13 @@ import com.library.project.web.repository.IGeneroRepository;
 import com.library.project.web.services.dto.AutorDTO;
 import com.library.project.web.services.dto.AutorSaveDTO;
 import com.library.project.web.services.dto.AutorUpdateDTO;
-import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.library.project.web.models.Autor;
 import com.library.project.web.repository.IAutorRepository;
 import com.library.project.web.services.IAutorService;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @Service
 public class AutorServiceImpl implements IAutorService{
@@ -46,18 +44,23 @@ public class AutorServiceImpl implements IAutorService{
 	@Override
 	public AutorDTO guardar(AutorSaveDTO autorSaveDTO) {
 		checkDuplicate(autorSaveDTO);
+		
+		Autor autorModel = mapper.map(autorSaveDTO, Autor.class);
 
-		Autor autorModel = new Autor();
-		Genero generoModel = generoRepository.findById(autorSaveDTO.getGenero()).
-				orElseThrow(() -> new ResourceNotFoundException("genero", "id", autorSaveDTO.getGenero()));;
-		autorModel.setNombre(autorSaveDTO.getNombre());
-		autorModel.setApellidoPaterno(autorSaveDTO.getApellidoPaterno());
-		autorModel.setApellidoMaterno(autorSaveDTO.getApellidoMaterno());
-		autorModel.setGenero(generoModel);
+		List<Genero> generosModel = generoRepository.findAllById(autorSaveDTO.getGeneros());
+		
+		autorModel.setGeneros(generosModel);
 
 		Autor autorSave = autorRepository.save(autorModel);
+	
 		AutorDTO autorDTO = mapper.map(autorSave, AutorDTO.class);
-		autorDTO.setGenero(autorSave.getGenero());
+		
+		List<String> nombresGeneros = generosModel.stream()
+                .map(Genero::getNombre)
+                .collect(Collectors.toList());
+		
+		autorDTO.setGeneros(nombresGeneros);
+
 		return autorDTO;
 	}
 
@@ -77,7 +80,13 @@ public class AutorServiceImpl implements IAutorService{
 		Autor autor = autorRepository.findById(id).
 				orElseThrow(() -> new ResourceNotFoundException("autor", "id", id));
 		AutorDTO autorDTO = mapper.map(autor, AutorDTO.class);
-		autorDTO.setGenero(autor.getGenero());
+		
+		List<String> nombresGeneros = autor.getGeneros().stream()
+                .map(Genero::getNombre)
+                .collect(Collectors.toList());
+		
+		autorDTO.setGeneros(nombresGeneros);
+		
 		autorRepository.deleteById(id);
 		return autorDTO;
 	}
@@ -86,15 +95,35 @@ public class AutorServiceImpl implements IAutorService{
 	public AutorDTO update(AutorUpdateDTO autorUpdateDTO){
 		Autor autor = autorRepository.findById(autorUpdateDTO.getId()).
 				orElseThrow(() -> new ResourceNotFoundException("autor", "id", autorUpdateDTO.getId()));
-		Genero genero = generoRepository.findById(autorUpdateDTO.getGenero()).
-				orElseThrow(() -> new ResourceNotFoundException("genero", "id", autorUpdateDTO.getGenero()));
-		autor.setNombre(autorUpdateDTO.getNombre());
-		autor.setApellidoPaterno(autorUpdateDTO.getApellidoPaterno());
-		autor.setApellidoMaterno(autorUpdateDTO.getApellidoMaterno());
-		autor.setGenero(genero);
+		
+		List<Genero> generosModel = autor.getGeneros();
+		
+		if(autorUpdateDTO.getNombre() != null){
+			autor.setNombre(autorUpdateDTO.getNombre());
+		}
+		
+		if(autorUpdateDTO.getApellidoPaterno() != null){
+			autor.setApellidoPaterno(autorUpdateDTO.getApellidoPaterno());
+		}
+		
+		if(autorUpdateDTO.getApellidoMaterno() != null){
+			autor.setApellidoMaterno(autorUpdateDTO.getApellidoMaterno());
+		}
+		
+		if(autorUpdateDTO.getGeneros() != null) {
+			generosModel = generoRepository.findAllById(autorUpdateDTO.getGeneros());
+			autor.setGeneros(generosModel);
+		}
+		
 		Autor autorUdpate = autorRepository.save(autor);
 		AutorDTO autorDTO = mapper.map(autorUdpate, AutorDTO.class);
-		autorDTO.setGenero(autorUdpate.getGenero());
+		
+		List<String> nombresGeneros = generosModel.stream()
+                .map(Genero::getNombre)
+                .collect(Collectors.toList());
+		
+		autorDTO.setGeneros(nombresGeneros);
+		
 		return  autorDTO;
 	}
 }

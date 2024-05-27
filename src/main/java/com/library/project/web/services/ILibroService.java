@@ -5,6 +5,7 @@ import java.util.List;
 import com.library.project.web.models.Libro;
 import com.library.project.web.services.dto.LibroDTO;
 import com.library.project.web.services.dto.LibroSaveDTO;
+import com.library.project.web.services.dto.LibroUpdateDTO;
 
 public interface ILibroService {
 
@@ -15,4 +16,6 @@ public interface ILibroService {
 	public void eliminar(Long id);
 
 	public LibroDTO buscarPorId(Long id);
+
+	public LibroDTO update(LibroUpdateDTO libroUpdateDTO);
 }
