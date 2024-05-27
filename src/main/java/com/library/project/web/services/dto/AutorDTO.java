@@ -5,6 +5,8 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.List;
 
+import com.library.project.web.models.Genero;
+
 @Data
 public class AutorDTO implements Serializable {
 
@@ -14,5 +16,5 @@ public class AutorDTO implements Serializable {
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
-    private List<String> generos;
+    private List<Genero> generos;
 }

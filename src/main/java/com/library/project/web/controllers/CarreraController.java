@@ -39,7 +39,7 @@ public class CarreraController {
 		}
 	}
 	
-	@GetMapping("/carrera/{id}")
+	@GetMapping("{id}")
 	public ResponseEntity<Object> idCarrera(@PathVariable Long id) {
 		try {
 			Carrera response = this.carreraService.getCarreraById(id);

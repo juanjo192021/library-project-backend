@@ -49,5 +49,4 @@ public class Autor implements Serializable{
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Genero> generos;
 
-
 }

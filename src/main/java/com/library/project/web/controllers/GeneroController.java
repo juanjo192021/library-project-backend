@@ -39,7 +39,7 @@ public class GeneroController {
 		}
 	}
 	
-	@GetMapping("/genero/{id}")
+	@GetMapping("{id}")
 	public ResponseEntity<Object> idGenero(@PathVariable Long id) {
 		try {
 			Genero response = this.generoService.buscarPorId(id);

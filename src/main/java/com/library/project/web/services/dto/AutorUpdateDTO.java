@@ -3,6 +3,7 @@ package com.library.project.web.services.dto;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 public class AutorUpdateDTO implements Serializable {
@@ -13,5 +14,5 @@ public class AutorUpdateDTO implements Serializable {
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
-    private Iterable<Long> generos;
+    private List<Long> generos;
 }

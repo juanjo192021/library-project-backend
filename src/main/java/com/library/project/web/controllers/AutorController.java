@@ -30,7 +30,7 @@ public class AutorController {
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
-	@GetMapping("/autor/{id}")
+	@GetMapping("{id}")
 	public ResponseEntity<Object> idAutor(@PathVariable Long id) {
 		try {
 			AutorDTO response = this.autorService.buscarPorId(id);

@@ -1,6 +1,5 @@
 package com.library.project.web.exception;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.library.project.web.payload.ApiResponse;
 import com.library.project.web.payload.JsonRequired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +8,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.HashMap;

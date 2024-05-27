@@ -40,7 +40,7 @@ public class PasilloController {
 		}
 	}
 	
-	@GetMapping("/pasillo/{id}")
+	@GetMapping("{id}")
 	public ResponseEntity<Object> idPasillo(@PathVariable Long id) {
 		try {
 			Pasillo response = this.pasilloService.buscarPorId(id);

@@ -38,6 +38,7 @@ public class AutorServiceImpl implements IAutorService{
 		Autor autor = autorRepository.findById(id).
 				orElseThrow(() -> new ResourceNotFoundException("autor", "id", id));
 		AutorDTO autorDTO = mapper.map(autor, AutorDTO.class);
+		autor.setGeneros(autor.getGeneros());
 		return autorDTO;
 	}
 
@@ -55,11 +56,7 @@ public class AutorServiceImpl implements IAutorService{
 	
 		AutorDTO autorDTO = mapper.map(autorSave, AutorDTO.class);
 		
-		List<String> nombresGeneros = generosModel.stream()
-                .map(Genero::getNombre)
-                .collect(Collectors.toList());
-		
-		autorDTO.setGeneros(nombresGeneros);
+		autorDTO.setGeneros(autorSave.getGeneros());
 
 		return autorDTO;
 	}
@@ -81,11 +78,7 @@ public class AutorServiceImpl implements IAutorService{
 				orElseThrow(() -> new ResourceNotFoundException("autor", "id", id));
 		AutorDTO autorDTO = mapper.map(autor, AutorDTO.class);
 		
-		List<String> nombresGeneros = autor.getGeneros().stream()
-                .map(Genero::getNombre)
-                .collect(Collectors.toList());
-		
-		autorDTO.setGeneros(nombresGeneros);
+		autorDTO.setGeneros(autor.getGeneros());
 		
 		autorRepository.deleteById(id);
 		return autorDTO;
@@ -118,11 +111,7 @@ public class AutorServiceImpl implements IAutorService{
 		Autor autorUdpate = autorRepository.save(autor);
 		AutorDTO autorDTO = mapper.map(autorUdpate, AutorDTO.class);
 		
-		List<String> nombresGeneros = generosModel.stream()
-                .map(Genero::getNombre)
-                .collect(Collectors.toList());
-		
-		autorDTO.setGeneros(nombresGeneros);
+		autorDTO.setGeneros(autorUdpate.getGeneros());
 		
 		return  autorDTO;
 	}
