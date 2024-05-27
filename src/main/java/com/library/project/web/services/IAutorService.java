@@ -15,5 +15,5 @@ public interface IAutorService {
 	public List<Autor> getAll();
 	public AutorDTO findById(Long id);
 	public AutorDTO update(AutorUpdateDTO autor);
-	public AutorDTO delete(Long id);
+	/*public AutorDTO delete(Long id);*/
 }

@@ -8,5 +8,4 @@ import com.library.project.web.models.Genero;
 import java.util.List;
 
 public interface IGeneroRepository extends JpaRepository<Genero, Long>{
-    List<Genero> findByAutoresId(Long id);
 }

@@ -66,7 +66,7 @@ public class AutorServiceImpl implements IAutorService{
 	public AutorDTO findById (Long id){
 		Autor autor = autorRepository.findById(id).
 				orElseThrow(() -> new ResourceNotFoundException("autor", "id", id));
-		List<Genero> generoModel = generoRepository.findByAutoresId(id);
+		List<Genero> generoModel = autor.getGeneros();
 		AutorDTO autorDTO = mapper.map(autor, AutorDTO.class);
 		autorDTO.setGenero(generoModel);
 		return autorDTO;
@@ -87,15 +87,16 @@ public class AutorServiceImpl implements IAutorService{
 		return autorDTO;
 	}
 
+	/*
 	@Override
 	public AutorDTO delete(Long id){
 		Autor autor = autorRepository.findById(id).
 				orElseThrow(() -> new ResourceNotFoundException("autor", "id", id));
-		List<Genero> generoModel = generoRepository.findByAutoresId(id);
+		List<Genero> generoModel = autor.getGeneros();
 		AutorDTO autorDTO = mapper.map(autor, AutorDTO.class);
 		autorDTO.setGenero(generoModel);
 		autorRepository.deleteDetalleAutorByAutorId(id);
-		autorRepository.deleteById(id);
+		autorRepository.deleteAutorById(id);
 		return autorDTO;
-	}
+	}*/
 }

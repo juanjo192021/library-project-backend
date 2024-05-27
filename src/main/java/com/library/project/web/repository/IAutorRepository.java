@@ -21,4 +21,9 @@ public interface IAutorRepository extends JpaRepository<Autor, Long> {
     @Modifying
     @Query(value = "DELETE FROM detalle_autor WHERE autor_id = :autorId", nativeQuery = true)
     void deleteDetalleAutorByAutorId(Long autorId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM autor WHERE id = :autorId", nativeQuery = true)
+    void deleteAutorById(Long autorId);
 }

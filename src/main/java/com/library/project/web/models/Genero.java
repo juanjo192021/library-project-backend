@@ -32,8 +32,8 @@ public class Genero implements Serializable{
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
 
-	@JsonIgnore
+	/*@JsonIgnore
 	@ManyToMany(mappedBy = "generos")
 	@JsonBackReference
-	private List<Autor> autores;
+	private List<Autor> autores;*/
 }

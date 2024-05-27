@@ -49,9 +49,10 @@ public class AutorController {
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
+	/*
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<AutorDTO> deleteAutor(@PathVariable Long id) {
 		AutorDTO response = this.autorService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
-	}
+	}*/
 }
