@@ -13,8 +13,6 @@ public interface ILibroService {
 
 	public LibroDTO save(LibroSaveDTO libro);
 
-	public LibroDTO delete(Long id);
-
 	public LibroDTO findById(Long id);
 
 	public LibroDTO update(LibroUpdateDTO libroUpdateDTO);

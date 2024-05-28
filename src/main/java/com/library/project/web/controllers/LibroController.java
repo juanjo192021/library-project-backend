@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.library.project.web.models.Libro;
 import com.library.project.web.services.ILibroService;
-import com.library.project.web.services.dto.AutorDTO;
-import com.library.project.web.services.dto.AutorUpdateDTO;
 import com.library.project.web.services.dto.LibroDTO;
 import com.library.project.web.services.dto.LibroSaveDTO;
 import com.library.project.web.services.dto.LibroUpdateDTO;
@@ -32,25 +30,25 @@ public class LibroController {
 	@Autowired
 	private ILibroService libroService;
 	
-	@GetMapping("/getAll")
+	@GetMapping("getAll")
 	public ResponseEntity<Object> getAllLibro() {
 		List<Libro> response = this.libroService.getAll();
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 	
-	@GetMapping("/findById/{id}")
+	@GetMapping("findById/{id}")
 	public ResponseEntity<Object> findByIdLibro(@PathVariable Long id) {
 		LibroDTO response = this.libroService.findById(id);
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 	
-	@PostMapping("/save")
+	@PostMapping("save")
 	public ResponseEntity<Object> saveLibro(@RequestBody LibroSaveDTO libro) {
 		LibroDTO response = this.libroService.save(libro);
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 	
-	@PatchMapping("/update")
+	@PatchMapping("update")
 	public ResponseEntity<Object> updateLibro(@RequestBody LibroUpdateDTO libro) {
 		LibroDTO response = this.libroService.update(libro);
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);

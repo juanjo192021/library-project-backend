@@ -1,14 +1,11 @@
 package com.library.project.web.controllers;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,54 +32,37 @@ public class AccesoController {
 	@PostMapping("login")
 	public ResponseEntity<?> login(@RequestBody AuthRequest request)
 	{
-		try {
+		AuthResponse response = accesoService.login(request);
 
-			AuthResponse response = accesoService.login(request);
+		if(Objects.isNull(response)) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).contentType(MediaType.APPLICATION_JSON).body("Credenciales incorrectas");
 
-			if(Objects.isNull(response)) {
-				return ResponseEntity.status(HttpStatus.CONFLICT).contentType(MediaType.APPLICATION_JSON).body("Credenciales incorrectas");
-
-			}else {
-				return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);			}
-	
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
-					.body(e.getLocalizedMessage());		}
+		}else {
+			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);			
+			}
 	}
 	
 	@PostMapping("registro")
 	public ResponseEntity<?> registro(@RequestBody AuthRegisterRequest request)
 	{
-		try {
-			AuthResponse response = accesoService.registro(request);
+		AuthResponse response = accesoService.registro(request);
 
-			if(Objects.isNull(response)) {
-				return ResponseEntity.status(HttpStatus.CONFLICT).contentType(MediaType.APPLICATION_JSON).body("Correo ya registrado");
+		if(Objects.isNull(response)) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).contentType(MediaType.APPLICATION_JSON).body("Correo ya registrado");
 
-			}else {
-				return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);			}
-	
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
-					.body(e.getLocalizedMessage());
-		}
+		}else {
+			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);			
+			}
 	}
 
 	@GetMapping("checkToken")
 	public ResponseEntity<?> checkToken(HttpServletRequest request)
 	{
-		try {
+		AuthResponse response = accesoService.checkUsuarioToken(request);
 
-			AuthResponse response = accesoService.checkUsuarioToken(request);
-
-			if(Objects.isNull(response)) {
-				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).contentType(MediaType.APPLICATION_JSON).body("Token no valido");			
-			}
-			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);			
-		
-		} catch (Exception e) {
-
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
-					.body(e.getLocalizedMessage());		}
+		if(Objects.isNull(response)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).contentType(MediaType.APPLICATION_JSON).body("Token no valido");			
+		}
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);		
 	}
 }

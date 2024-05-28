@@ -42,26 +42,22 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	}
 	
 	@Override
-	public UsuarioDTO buscarPorId(Long id) {
-		Usuario usuario =  usuarioRepository.findById(id).orElse(null);
+	public UsuarioDTO findById(Long id) {
+		Usuario usuario =  usuarioRepository.findById(id).
+				orElseThrow(() -> new ResourceNotFoundException("usuario", "id", id));
 		UsuarioDTO usuarioDTO = mapper.map(usuario, UsuarioDTO.class);
-		
 		return usuarioDTO;
 	}
 	
 	@Override
-	public UsuarioDTO guardar(UsuarioSaveDTO usuarioSaveDTO) {
-		
+	public UsuarioDTO save(UsuarioSaveDTO usuarioSaveDTO) {
 		Usuario usuarioModel = mapper.map(usuarioSaveDTO, Usuario.class);
-		Rol rolModel = rolRepository.findById(usuarioSaveDTO.getRol()).orElse(null);
-				
+		Rol rolModel = rolRepository.findById(usuarioSaveDTO.getRol()).
+				orElseThrow(() -> new ResourceNotFoundException("rol", "id", usuarioSaveDTO.getRol()));
 		usuarioModel.setRol(rolModel);
-		
 		Usuario usuarioSave = usuarioRepository.save(usuarioModel);
-
 		UsuarioDTO usuarioDTO = mapper.map(usuarioSave, UsuarioDTO.class);
 		usuarioDTO.setRol(usuarioSave.getRol().getNombre());
-		
 		return usuarioDTO;
 	}
 	
@@ -69,30 +65,12 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	public UsuarioDTO update(UsuarioUpdateDTO usuarioUpdateDTO){
 		Usuario usuario = usuarioRepository.findById(usuarioUpdateDTO.getId()).
 				orElseThrow(() -> new ResourceNotFoundException("usuario", "id", usuarioUpdateDTO.getId()));
-		
-		Rol rolModel = rolRepository.findById(usuarioUpdateDTO.getRol()).orElse(null);
-
-		
-		if(usuarioUpdateDTO.getNombre() != null) {
-			usuario.setNombre(usuarioUpdateDTO.getNombre()); 
-		}
-		
-		if(usuarioUpdateDTO.getApellido_paterno() != null) {
-			usuario.setApellido_paterno(usuarioUpdateDTO.getApellido_paterno()); 
-		}
-		
-		if(usuarioUpdateDTO.getApellido_materno() != null) {
-			usuario.setApellido_materno(usuarioUpdateDTO.getApellido_materno()); 
-		}
-		
-		if(usuarioUpdateDTO.getCorreo() != null) {
-			usuario.setCorreo(usuarioUpdateDTO.getCorreo()); 
-		}
-		
+		mapper.map(usuarioUpdateDTO, usuario);
 		if(usuarioUpdateDTO.getRol() != null) {
-			usuario.setRol(rolModel); 
+			Rol rolModel = rolRepository.findById(usuarioUpdateDTO.getRol()).
+					orElseThrow(() -> new ResourceNotFoundException("rol", "id", usuarioUpdateDTO.getRol()));
+			usuario.setRol(rolModel);
 		}
-
 		Usuario usuarioUdpate = usuarioRepository.save(usuario);
 		UsuarioDTO usuarioDTO = mapper.map(usuarioUdpate, UsuarioDTO.class);
 		usuarioDTO.setRol(usuarioUdpate.getRol().getNombre());
@@ -100,7 +78,12 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	}
 
 	@Override
-	public void eliminar(Long id) {
-		usuarioRepository.deleteById(id);	
+	public UsuarioDTO delete(Long id) {
+		Usuario usuario = usuarioRepository.findById(id).
+				orElseThrow(() -> new ResourceNotFoundException("usuario", "id", id));
+		UsuarioDTO usuarioDTO = mapper.map(usuario, UsuarioDTO.class);
+		usuarioDTO.setRol(usuario.getRol().getNombre());
+		usuarioRepository.deleteById(id);
+		return usuarioDTO;
 	}
 }

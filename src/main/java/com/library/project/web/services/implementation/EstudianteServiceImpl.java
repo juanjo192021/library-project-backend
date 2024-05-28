@@ -46,14 +46,11 @@ public class EstudianteServiceImpl implements IEstudianteService{
 	public EstudianteDTO save(EstudianteSaveDTO estudianteSaveDTO) {
 		checkDuplicateName(estudianteSaveDTO);
 		checkDuplicateNumberDocument(estudianteSaveDTO);
-
 		Estudiante estudianteModel = mapper.map(estudianteSaveDTO, Estudiante.class);
 		Carrera carreraModel = carreraRepository.findById(estudianteSaveDTO.getCarrera()).
 				orElseThrow(() -> new ResourceNotFoundException("carrera", "id",estudianteSaveDTO.getCarrera()));
 		estudianteModel.setCarrera(carreraModel);
-
 		Estudiante estudianteSave = estudianteRepository.save(estudianteModel);
-
 		EstudianteDTO estudianteDTO = mapper.map(estudianteSave, EstudianteDTO.class);
 		estudianteDTO.setCarrera(estudianteSave.getCarrera());
 		
@@ -69,7 +66,6 @@ public class EstudianteServiceImpl implements IEstudianteService{
 		if (estudianteRepository.existsByNombre(estudianteSaveDTO.getNombre()) &&
 				estudianteRepository.existsByApellidoPaterno(estudianteSaveDTO.getApellidoPaterno()) &&
 				estudianteRepository.existsByApellidoMaterno(estudianteSaveDTO.getApellidoMaterno())) {
-
 			throw new ConflictException("estudiante", "name", estudianteSaveDTO.getNombre() + " " +
 					estudianteSaveDTO.getApellidoPaterno() + " " +
 					estudianteSaveDTO.getApellidoMaterno());
@@ -81,24 +77,14 @@ public class EstudianteServiceImpl implements IEstudianteService{
 		Estudiante estudiante = estudianteRepository.findById(estudianteUpdateDTO.getId()).
 				orElseThrow(() -> new ResourceNotFoundException("estudiante", "id", estudianteUpdateDTO.getId()));
 		mapper.map(estudianteUpdateDTO,estudiante);
-		Carrera carreraModel = carreraRepository.findById(estudianteUpdateDTO.getCarrera()).
-				orElseThrow(() -> new ResourceNotFoundException("carrera", "id",estudianteUpdateDTO.getCarrera()));
-		estudiante.setCarrera(carreraModel);
-
+		if(estudianteUpdateDTO.getCarrera() != null) {
+			Carrera carreraModel = carreraRepository.findById(estudianteUpdateDTO.getCarrera()).
+					orElseThrow(() -> new ResourceNotFoundException("carrera", "id",estudianteUpdateDTO.getCarrera()));
+			estudiante.setCarrera(carreraModel);
+		}
 		Estudiante estudianteUdpate = estudianteRepository.save(estudiante);
 		EstudianteDTO estudianteDTO = mapper.map(estudianteUdpate, EstudianteDTO.class);
 		estudianteDTO.setCarrera(estudianteUdpate.getCarrera());
 		return estudianteDTO;
 	}
-
-	@Override
-	public EstudianteDTO delete(Long id) {
-		Estudiante estudiante = estudianteRepository.findById(id).
-				orElseThrow(() -> new ResourceNotFoundException("estudiante", "id", id));
-		EstudianteDTO estudianteDTO = mapper.map(estudiante, EstudianteDTO.class);
-		estudianteDTO.setCarrera(estudiante.getCarrera());
-		estudianteRepository.deleteById(id);
-		return estudianteDTO;
-	}
-	
 }

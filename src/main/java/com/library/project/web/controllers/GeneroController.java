@@ -21,33 +21,27 @@ public class GeneroController {
 	@Autowired
 	private IGeneroService generoService;
 	
-	@GetMapping("/getAll")
+	@GetMapping("getAll")
 	public ResponseEntity<Object> getAllGenero() {
 		List<Genero> response = this.generoService.getAll();
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 	
-	@GetMapping("/findById/{id}")
+	@GetMapping("findById/{id}")
 	public ResponseEntity<Object> findByIdGenero(@PathVariable Long id) {
 		Genero response = this.generoService.findById(id);
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 	
-	@PostMapping("/save/{nombre}")
+	@PostMapping("save/{nombre}")
 	public ResponseEntity<Object> saveGenero(@PathVariable("nombre") String genero) {
 		Genero response = this.generoService.save(genero);
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
-	@PatchMapping("/update")
+	@PatchMapping("update")
 	public ResponseEntity<Object> updateGenero(@RequestBody Genero genero) {
 		Genero response = this.generoService.update(genero);
-		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
-	}
-
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Object> deleteGenero(@PathVariable Long id){
-		Genero response = this.generoService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 }

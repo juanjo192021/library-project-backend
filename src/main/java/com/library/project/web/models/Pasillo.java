@@ -1,7 +1,6 @@
 package com.library.project.web.models;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,7 +35,7 @@ public class Pasillo implements Serializable{
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
 	
-	//@OneToMany(mappedBy = "pasillo")
-	//@JsonIgnore
-	//private List<Libro> libros;
+	@OneToMany(mappedBy = "pasillo")
+	@JsonIgnore
+	private List<Libro> libros;
 }

@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.library.project.web.exception.ConflictException;
+import com.library.project.web.exception.ResourceNotFoundException;
+import com.library.project.web.models.Libro;
 import com.library.project.web.models.Pasillo;
 import com.library.project.web.repository.IPasilloRepository;
 import com.library.project.web.services.IPasilloService;
@@ -21,12 +24,13 @@ public class PasilloServiceImpl implements IPasilloService {
 	}
 	
 	@Override
-	public Pasillo buscarPorId(Long id) {
-		return pasilloRepository.findById(id).orElse(null);
+	public Pasillo findById(Long id) {
+		return pasilloRepository.findById(id).
+				orElseThrow(() -> new ResourceNotFoundException("pasillo", "id", id));
 	}
 	
 	@Override
-	public Pasillo guardar(String pasillo) {
+	public Pasillo save(String pasillo) {
 		Pasillo pasilloModel = Pasillo.builder().nombre(pasillo).build();
 		return pasilloRepository.save(pasilloModel);
 	}
@@ -34,13 +38,21 @@ public class PasilloServiceImpl implements IPasilloService {
 	//Parametro pasillo: id = id buscado en la bd, nombre = nombre que se va a actualizar
 	@Override
 	public Pasillo update(Pasillo pasillo) {
-		Pasillo pasilloModel = pasilloRepository.findById(pasillo.getId()).orElse(null);
+		Pasillo pasilloModel = pasilloRepository.findById(pasillo.getId()).
+				orElseThrow(() -> new ResourceNotFoundException("pasillo", "id", pasillo.getId()));
 		pasilloModel.setNombre(pasillo.getNombre());
 		return pasilloRepository.save(pasilloModel);
 	}
 	
 	@Override
-	public void deletePasillo(Long id) {
+	public Pasillo delete(Long id) {
+		Pasillo pasillo = pasilloRepository.findById(id).
+				orElseThrow(() -> new ResourceNotFoundException("pasillo", "id", id));
+		List<Libro> libros = pasillo.getLibros();
+		if(!libros.isEmpty()){
+			throw new ConflictException("libros","pasillo");
+		}
         pasilloRepository.deleteById(id);
+        return pasillo;
     }
 }

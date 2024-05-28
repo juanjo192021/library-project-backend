@@ -53,8 +53,8 @@ public class Libro implements Serializable{
 	@ManyToOne(optional = false)
 	private Autor autor;
 	
-	//@ManyToMany(mappedBy = "libros")
-	//@JsonIgnore
-	//private List<Prestamo> prestamos;
+	@ManyToMany(mappedBy = "libros")
+	@JsonIgnore
+	private List<Prestamo> prestamos;
 
 }

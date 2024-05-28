@@ -21,31 +21,31 @@ public class CarreraController {
 	@Autowired
 	private ICarreraService carreraService;
 	
-	@GetMapping("/getAll")
+	@GetMapping("getAll")
 	public ResponseEntity<Object> getAllCarrera() {
 		List<Carrera> response = this.carreraService.getAll();
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 	
-	@GetMapping("/findById/{id}")
+	@GetMapping("findById/{id}")
 	public ResponseEntity<Object> findByIdCarrera(@PathVariable Long id) {
 		Carrera response = this.carreraService.findById(id);
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 	
-	@PostMapping("/save/{nombre}")
+	@PostMapping("save/{nombre}")
 	public ResponseEntity<Object> saveCarrera(@PathVariable("nombre") String carrera) {
 		Carrera response = this.carreraService.save(carrera);
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
-	@PatchMapping("/update")
+	@PatchMapping("update")
 	public ResponseEntity<Object> updateCarrera(@RequestBody Carrera carrera) {
 		Carrera response = this.carreraService.update(carrera);
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("delete/{id}")
 	public ResponseEntity<Object> deleteCarrera(@PathVariable Long id){
 		Carrera response = this.carreraService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);

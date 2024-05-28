@@ -23,7 +23,7 @@ public class PrestamoController {
 	@Autowired
 	private IPrestamoService prestamoService;
 	
-	@GetMapping("listar")
+	@GetMapping("getAll")
 	public ResponseEntity<Object> getAllUsuarios() {
 		try {
 			List<Prestamo> response = this.prestamoService.getListPrestamos();

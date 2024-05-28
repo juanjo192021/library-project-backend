@@ -15,8 +15,6 @@ public interface IEstudianteService {
 
 	public EstudianteDTO save(EstudianteSaveDTO estudianteSaveDTO);
 
-	public EstudianteDTO delete(Long id);
-
 	public EstudianteDTO update(EstudianteUpdateDTO estudianteUpdateDTO);
 
 }

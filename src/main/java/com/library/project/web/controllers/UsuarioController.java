@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import com.library.project.web.services.dto.UsuarioDTO;
 import com.library.project.web.services.dto.UsuarioSaveDTO;
 import com.library.project.web.services.dto.UsuarioUpdateDTO;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import com.library.project.web.models.Usuario;
@@ -31,48 +33,34 @@ public class UsuarioController {
 	@Autowired
 	private IUsuarioService usuarioService;
 	
-	@GetMapping("listar")
-	public ResponseEntity<Object> listUsuarios() {
-		try {
-			List<Usuario> response = this.usuarioService.getListUsuarios();
-			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
-		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
-					.body(e.getLocalizedMessage());
-		}
+	@GetMapping("getAll")
+	public ResponseEntity<Object> getAllUsuarios() {
+		List<Usuario> response = this.usuarioService.getListUsuarios();
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 	
-	@GetMapping("{id}")
-	public ResponseEntity<Object> idUsuario(@PathVariable Long id) {
-		try {
-			UsuarioDTO response = this.usuarioService.buscarPorId(id);
-			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
-		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
-					.body(e.getLocalizedMessage());
-		}
+	@GetMapping("findById/{id}")
+	public ResponseEntity<Object> findByIdUsuario(@PathVariable Long id) {
+		UsuarioDTO response = this.usuarioService.findById(id);
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 	
-	@PostMapping("/guardar")
-	public ResponseEntity<Object> saveUsuario(@RequestBody UsuarioSaveDTO usuario) {
-		try {
-			UsuarioDTO response = this.usuarioService.guardar(usuario);
-			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
-		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
-					.body(e.getLocalizedMessage());
-		}
+	@PostMapping("save")
+	public ResponseEntity<Object> saveUsuario(@RequestBody @Valid UsuarioSaveDTO usuario) {
+		UsuarioDTO response = this.usuarioService.save(usuario);
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
-	@PatchMapping("/update")
+	@PatchMapping("update")
 	public ResponseEntity<Object> updateUsuario(@RequestBody UsuarioUpdateDTO usuario) {
-		try {
-			UsuarioDTO response = this.usuarioService.update(usuario);	
-			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
-		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
-					.body(e.getLocalizedMessage());
-		}	
+		UsuarioDTO response = this.usuarioService.update(usuario);	
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+	}
+	
+	@DeleteMapping("delete/{id}")
+	public ResponseEntity<Object> deleteUsuario(@PathVariable Long id){
+		UsuarioDTO response = this.usuarioService.delete(id);
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
 }

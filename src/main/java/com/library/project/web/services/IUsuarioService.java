@@ -14,12 +14,12 @@ public interface IUsuarioService {
 
 	public Optional<Usuario> buscarPorCorreo(String username);
 
-	public UsuarioDTO buscarPorId(Long id);
+	public UsuarioDTO findById(Long id);
 
-	public void eliminar(Long id);
+	public UsuarioDTO delete(Long id);
 
 	public UsuarioDTO update(UsuarioUpdateDTO usuarioUpdateDTO);
 
-	public UsuarioDTO guardar(UsuarioSaveDTO usuarioSaveDTO);
+	public UsuarioDTO save(UsuarioSaveDTO usuarioSaveDTO);
 
 }

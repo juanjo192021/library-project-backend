@@ -79,8 +79,10 @@ public class AutorServiceImpl implements IAutorService{
 		Autor autor = autorRepository.findById(autorUpdateDTO.getId())
 				.orElseThrow(() -> new ResourceNotFoundException("autor", "id", autorUpdateDTO.getId()));
 		mapper.map(autorUpdateDTO, autor);
-		List<Genero> generosModel = generoRepository.findAllById(autorUpdateDTO.getGeneros());
-		autor.setGeneros(generosModel);
+		if(!autorUpdateDTO.getGeneros().isEmpty()) {
+			List<Genero> generosModel = generoRepository.findAllById(autorUpdateDTO.getGeneros());
+			autor.setGeneros(generosModel);
+		}
 		Autor autorUdpate = autorRepository.save(autor);
 		AutorDTO autorDTO = mapper.map(autorUdpate, AutorDTO.class);
 		autorDTO.setGeneros(autorUdpate.getGeneros());
