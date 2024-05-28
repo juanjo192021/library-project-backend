@@ -6,13 +6,13 @@ import com.library.project.web.models.Carrera;
 
 public interface ICarreraService {
 
-	public List<Carrera> getListCarreras();
+	public List<Carrera> getAll();
 
-	public Carrera guardar(String carrera);
+	public Carrera save(String carrera);
 
-	public Carrera getCarreraById(Long id);
+	public Carrera findById(Long id);
 
-	public void deleteCarrera(Long id);
+	public Carrera delete(Long id);
 
 	public Carrera update(Carrera carrera);
 

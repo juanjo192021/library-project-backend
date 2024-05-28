@@ -1,5 +1,6 @@
 package com.library.project.web.services.dto;
 
+import com.library.project.web.models.Carrera;
 import lombok.Data;
 
 @Data
@@ -12,5 +13,5 @@ public class EstudianteDTO {
 	private String numeroDocumento;
 	private String correo;
 	private String codigoEstudiante;
-	private String carrera;
+	private Carrera carrera;
 }

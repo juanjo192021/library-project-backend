@@ -29,9 +29,7 @@ public class AutorServiceImpl implements IAutorService{
 	private IGeneroRepository generoRepository;
 	
 	@Override
-	public List<Autor> getAll(){
-		return autorRepository.findAll();
-	}
+	public List<Autor> getAll(){ return autorRepository.findAll(); }
 
 	@Override
 	public AutorDTO findById(Long id) {
@@ -74,18 +72,15 @@ public class AutorServiceImpl implements IAutorService{
 		AutorDTO autorDTO = mapper.map(autor, AutorDTO.class);
 		autorDTO.setGeneros(autor.getGeneros());
 		autorRepository.deleteById(id);
-
 		return autorDTO;
 	}
 
 	@Override
 	public AutorDTO update(AutorUpdateDTO autorUpdateDTO){
-		Autor autor = autorRepository.findById(autorUpdateDTO.getId()).
-				orElseThrow(() -> new ResourceNotFoundException("autor", "id", autorUpdateDTO.getId()));
+		Autor autor = autorRepository.findById(autorUpdateDTO.getId())
+				.orElseThrow(() -> new ResourceNotFoundException("autor", "id", autorUpdateDTO.getId()));
+		mapper.map(autorUpdateDTO, autor);
 		List<Genero> generosModel = generoRepository.findAllById(autorUpdateDTO.getGeneros());
-		autor.setNombre(autorUpdateDTO.getNombre());
-		autor.setApellidoPaterno(autorUpdateDTO.getApellidoPaterno());
-		autor.setApellidoMaterno(autorUpdateDTO.getApellidoMaterno());
 		autor.setGeneros(generosModel);
 		Autor autorUdpate = autorRepository.save(autor);
 		AutorDTO autorDTO = mapper.map(autorUdpate, AutorDTO.class);
