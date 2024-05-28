@@ -29,12 +29,12 @@ public class AutorServiceImpl implements IAutorService{
 	private IGeneroRepository generoRepository;
 	
 	@Override
-	public List<Autor> getListAutor(){
+	public List<Autor> getAll(){
 		return autorRepository.findAll();
 	}
 
 	@Override
-	public AutorDTO buscarPorId(Long id) {
+	public AutorDTO findById(Long id) {
 		Autor autor = autorRepository.findById(id).
 				orElseThrow(() -> new ResourceNotFoundException("autor", "id", id));
 		AutorDTO autorDTO = mapper.map(autor, AutorDTO.class);
@@ -43,19 +43,14 @@ public class AutorServiceImpl implements IAutorService{
 	}
 
 	@Override
-	public AutorDTO guardar(AutorSaveDTO autorSaveDTO) {
+	public AutorDTO save(AutorSaveDTO autorSaveDTO) {
 		checkDuplicate(autorSaveDTO);
 		
 		Autor autorModel = mapper.map(autorSaveDTO, Autor.class);
-
 		List<Genero> generosModel = generoRepository.findAllById(autorSaveDTO.getGeneros());
-		
 		autorModel.setGeneros(generosModel);
-
 		Autor autorSave = autorRepository.save(autorModel);
-	
 		AutorDTO autorDTO = mapper.map(autorSave, AutorDTO.class);
-		
 		autorDTO.setGeneros(autorSave.getGeneros());
 
 		return autorDTO;
@@ -77,10 +72,9 @@ public class AutorServiceImpl implements IAutorService{
 		Autor autor = autorRepository.findById(id).
 				orElseThrow(() -> new ResourceNotFoundException("autor", "id", id));
 		AutorDTO autorDTO = mapper.map(autor, AutorDTO.class);
-		
 		autorDTO.setGeneros(autor.getGeneros());
-		
 		autorRepository.deleteById(id);
+
 		return autorDTO;
 	}
 
@@ -88,31 +82,14 @@ public class AutorServiceImpl implements IAutorService{
 	public AutorDTO update(AutorUpdateDTO autorUpdateDTO){
 		Autor autor = autorRepository.findById(autorUpdateDTO.getId()).
 				orElseThrow(() -> new ResourceNotFoundException("autor", "id", autorUpdateDTO.getId()));
-		
-		List<Genero> generosModel = autor.getGeneros();
-		
-		if(autorUpdateDTO.getNombre() != null){
-			autor.setNombre(autorUpdateDTO.getNombre());
-		}
-		
-		if(autorUpdateDTO.getApellidoPaterno() != null){
-			autor.setApellidoPaterno(autorUpdateDTO.getApellidoPaterno());
-		}
-		
-		if(autorUpdateDTO.getApellidoMaterno() != null){
-			autor.setApellidoMaterno(autorUpdateDTO.getApellidoMaterno());
-		}
-		
-		if(autorUpdateDTO.getGeneros() != null) {
-			generosModel = generoRepository.findAllById(autorUpdateDTO.getGeneros());
-			autor.setGeneros(generosModel);
-		}
-		
+		List<Genero> generosModel = generoRepository.findAllById(autorUpdateDTO.getGeneros());
+		autor.setNombre(autorUpdateDTO.getNombre());
+		autor.setApellidoPaterno(autorUpdateDTO.getApellidoPaterno());
+		autor.setApellidoMaterno(autorUpdateDTO.getApellidoMaterno());
+		autor.setGeneros(generosModel);
 		Autor autorUdpate = autorRepository.save(autor);
 		AutorDTO autorDTO = mapper.map(autorUdpate, AutorDTO.class);
-		
 		autorDTO.setGeneros(autorUdpate.getGeneros());
-		
 		return  autorDTO;
 	}
 }

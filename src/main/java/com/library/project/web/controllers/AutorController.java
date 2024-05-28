@@ -24,16 +24,16 @@ public class AutorController {
 	@Autowired
 	private IAutorService autorService;
 	
-	@GetMapping("listar")
-	public ResponseEntity<Object> listAutores() {
-		List<Autor> response = autorService.getListAutor();
+	@GetMapping("/getAll")
+	public ResponseEntity<Object> getAllAutor() {
+		List<Autor> response = autorService.getAll();
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 
-	@GetMapping("{id}")
-	public ResponseEntity<Object> idAutor(@PathVariable Long id) {
+	@GetMapping("/findById/{id}")
+	public ResponseEntity<Object> findByIdAutor(@PathVariable Long id) {
 		try {
-			AutorDTO response = this.autorService.buscarPorId(id);
+			AutorDTO response = this.autorService.findById(id);
 			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 		}
 		catch (Exception e) {
@@ -45,7 +45,7 @@ public class AutorController {
 	@PostMapping("/save")
 	public ResponseEntity<Object> saveAutor(@RequestBody @Valid AutorSaveDTO autor) {
 		try {
-			AutorDTO response = this.autorService.guardar(autor);
+			AutorDTO response = this.autorService.save(autor);
 			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 		}
 		catch (Exception e) {
