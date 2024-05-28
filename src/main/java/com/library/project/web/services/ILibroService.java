@@ -9,13 +9,13 @@ import com.library.project.web.services.dto.LibroUpdateDTO;
 
 public interface ILibroService {
 
-	public List<Libro> getListLibros();
+	public List<Libro> getAll();
 
-	public LibroDTO guardar(LibroSaveDTO libro);
+	public LibroDTO save(LibroSaveDTO libro);
 
-	public void eliminar(Long id);
+	public LibroDTO delete(Long id);
 
-	public LibroDTO buscarPorId(Long id);
+	public LibroDTO findById(Long id);
 
 	public LibroDTO update(LibroUpdateDTO libroUpdateDTO);
 }

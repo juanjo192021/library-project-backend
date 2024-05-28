@@ -32,51 +32,27 @@ public class LibroController {
 	@Autowired
 	private ILibroService libroService;
 	
-	@GetMapping("listar")
-	public ResponseEntity<Object> listLibros() {
-		try {
-			List<Libro> response = this.libroService.getListLibros();
-			
-			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
-		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
-					.body(e.getLocalizedMessage());
-		}
+	@GetMapping("/getAll")
+	public ResponseEntity<Object> getAllLibro() {
+		List<Libro> response = this.libroService.getAll();
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 	
-	@GetMapping("{id}")
-	public ResponseEntity<Object> idLibro(@PathVariable Long id) {
-		try {
-			LibroDTO response = this.libroService.buscarPorId(id);
-			
-			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
-		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
-					.body(e.getLocalizedMessage());
-		}
+	@GetMapping("/findById/{id}")
+	public ResponseEntity<Object> findByIdLibro(@PathVariable Long id) {
+		LibroDTO response = this.libroService.findById(id);
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 	
-	@PostMapping("/guardar")
+	@PostMapping("/save")
 	public ResponseEntity<Object> saveLibro(@RequestBody LibroSaveDTO libro) {
-		try {
-			LibroDTO response = this.libroService.guardar(libro);
-			
-			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
-		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
-					.body(e.getLocalizedMessage());
-		}
+		LibroDTO response = this.libroService.save(libro);
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 	
 	@PatchMapping("/update")
 	public ResponseEntity<Object> updateLibro(@RequestBody LibroUpdateDTO libro) {
-		try {
-			LibroDTO response = this.libroService.update(libro);
-			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
-		}
-		catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON)
-					.body(e.getLocalizedMessage());
-		}
+		LibroDTO response = this.libroService.update(libro);
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 	}
 }

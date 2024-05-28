@@ -3,12 +3,10 @@ package com.library.project.web.services.implementation;
 import java.util.List;
 
 import com.library.project.web.exception.BadRequestException;
-import com.library.project.web.exception.DuplicateException;
+import com.library.project.web.exception.ConflictException;
 import com.library.project.web.exception.ResourceNotFoundException;
 import com.library.project.web.models.Estudiante;
 import com.library.project.web.repository.IEstudianteRepository;
-import com.library.project.web.services.IEstudianteService;
-import com.library.project.web.services.dto.AutorSaveDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +20,6 @@ public class CarreraServiceImpl implements ICarreraService {
 	@Autowired
 	private ICarreraRepository carreraRepository;
 
-	@Autowired
-	private IEstudianteRepository estudianteRepository;
-	
 	@Override
 	public List<Carrera> getAll(){
 		return carreraRepository.findAll();
@@ -45,7 +40,7 @@ public class CarreraServiceImpl implements ICarreraService {
 
 	private void checkDuplicate(String carrera) {
 		if (carreraRepository.existsByNombre(carrera)) {
-			throw new DuplicateException("carrera", "name", carrera);
+			throw new ConflictException("carrera", "name", carrera);
 		}
 	}
 
@@ -63,7 +58,7 @@ public class CarreraServiceImpl implements ICarreraService {
 				orElseThrow(() -> new ResourceNotFoundException("carrera", "id", id));
 		List<Estudiante> estudiantes = carrera.getEstudiantes();
 		if(!estudiantes.isEmpty()){
-			throw new BadRequestException("delete");
+			throw new ConflictException("students","carrera");
 		}
 		carreraRepository.deleteById(id);
 		return carrera;

@@ -1,7 +1,6 @@
 package com.library.project.web.services.implementation;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import com.library.project.web.exception.*;
 import com.library.project.web.models.Genero;
@@ -59,7 +58,7 @@ public class AutorServiceImpl implements IAutorService{
 				autorRepository.existsByApellidoPaterno(autorSaveDTO.getApellidoPaterno()) &&
 				autorRepository.existsByApellidoMaterno(autorSaveDTO.getApellidoMaterno())) {
 
-			throw new DuplicateException("author", "name", autorSaveDTO.getNombre() + " " +
+			throw new ConflictException("author", "name", autorSaveDTO.getNombre() + " " +
 					autorSaveDTO.getApellidoPaterno() + " " +
 					autorSaveDTO.getApellidoMaterno());
 		}

@@ -6,13 +6,13 @@ import com.library.project.web.models.Genero;
 
 public interface IGeneroService {
 
-	public List<Genero> getListGeneros();
+	public List<Genero> getAll();
 
-	public Genero buscarPorId(Long id);
+	public Genero findById(Long id);
 
-	public Genero guardar(String genero);
+	public Genero save(String genero);
 
-	public void deleteGenero(Long id);
+	public Genero delete(Long id);
 
 	public Genero update(Genero genero);
 

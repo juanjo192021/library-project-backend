@@ -39,9 +39,9 @@ public class GlobalExceptionHandler {
         return  new ResponseEntity<>(apiResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    @ExceptionHandler(DuplicateException.class)
+    @ExceptionHandler(ConflictException.class)
     public ResponseEntity<ApiResponse> handlerDuplicateException(
-            DuplicateException exception, WebRequest webRequest){
+            ConflictException exception, WebRequest webRequest){
         ApiResponse apiResponse = new ApiResponse(HttpStatus.CONFLICT.value(),exception.getMessage(),
                 webRequest.getDescription(false));
         return  new ResponseEntity<>(apiResponse, HttpStatus.CONFLICT);

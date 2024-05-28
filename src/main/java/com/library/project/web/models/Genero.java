@@ -1,13 +1,10 @@
 package com.library.project.web.models;
 
 import java.io.Serializable;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,8 +28,8 @@ public class Genero implements Serializable{
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
 	
-	//@OneToMany(mappedBy = "genero")
-	//@JsonIgnore
-	//private List<Autor> autores;
+	@ManyToMany(mappedBy = "generos")
+	@JsonIgnore
+	private List<Autor> autores;
 
 }

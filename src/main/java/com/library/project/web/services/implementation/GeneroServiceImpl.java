@@ -2,6 +2,9 @@ package com.library.project.web.services.implementation;
 
 import java.util.List;
 
+import com.library.project.web.exception.ConflictException;
+import com.library.project.web.exception.ResourceNotFoundException;
+import com.library.project.web.models.Autor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,31 +19,46 @@ public class GeneroServiceImpl implements IGeneroService{
 	private IGeneroRepository generoRepository;
 	
 	@Override
-	public List<Genero> getListGeneros(){
+	public List<Genero> getAll(){
 		return generoRepository.findAll();
 	}
 	
 	@Override
-	public Genero buscarPorId(Long id) {
-		return generoRepository.findById(id).orElse(null);
+	public Genero findById(Long id) {
+		return generoRepository.findById(id).
+				orElseThrow(() -> new ResourceNotFoundException("genero", "id", id));
 	}
 	
 	@Override
-	public Genero guardar(String genero) {
+	public Genero save(String genero) {
+		checkDuplicate(genero);
 		Genero generoModel = Genero.builder().nombre(genero).build();
 		return generoRepository.save(generoModel);
 	}
-	
-	//Parametro genero: id = id buscado en la bd, nombre = nombre que se va a actualizar
+
+	private void checkDuplicate(String genero) {
+		if (generoRepository.existsByNombre(genero)) {
+			throw new ConflictException("genero", "name", genero);
+		}
+	}
+
 	@Override
 	public Genero update(Genero genero) {
-		Genero generoModel = generoRepository.findById(genero.getId()).orElse(null);
+		Genero generoModel = generoRepository.findById(genero.getId()).
+				orElseThrow(() -> new ResourceNotFoundException("genero", "id", genero.getId()));
 		generoModel.setNombre(genero.getNombre());
 		return generoRepository.save(generoModel);
 	}
 	
 	@Override
-	public void deleteGenero(Long id) {
+	public Genero delete(Long id) {
+		Genero genero = generoRepository.findById(id).
+				orElseThrow(() -> new ResourceNotFoundException("genero", "id", id));
+		List<Autor> autor = genero.getAutores();
+		if(!autor.isEmpty()){
+			throw new ConflictException("authors","genero");
+		}
         generoRepository.deleteById(id);
+		return genero;
     }
 }

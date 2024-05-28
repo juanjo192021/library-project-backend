@@ -2,8 +2,7 @@ package com.library.project.web.services.implementation;
 
 import java.util.List;
 
-import com.library.project.web.exception.DuplicateException;
-import com.library.project.web.services.dto.AutorSaveDTO;
+import com.library.project.web.exception.ConflictException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,7 +61,7 @@ public class EstudianteServiceImpl implements IEstudianteService{
 	}
 	private void checkDuplicateNumberDocument(EstudianteSaveDTO estudianteSaveDTO) {
 		if (estudianteRepository.existsByNumeroDocumento(estudianteSaveDTO.getNumeroDocumento())) {
-			throw new DuplicateException("estudiante", "number document", estudianteSaveDTO.getNumeroDocumento());
+			throw new ConflictException("estudiante", "number document", estudianteSaveDTO.getNumeroDocumento());
 		}
 	}
 
@@ -71,7 +70,7 @@ public class EstudianteServiceImpl implements IEstudianteService{
 				estudianteRepository.existsByApellidoPaterno(estudianteSaveDTO.getApellidoPaterno()) &&
 				estudianteRepository.existsByApellidoMaterno(estudianteSaveDTO.getApellidoMaterno())) {
 
-			throw new DuplicateException("estudiante", "name", estudianteSaveDTO.getNombre() + " " +
+			throw new ConflictException("estudiante", "name", estudianteSaveDTO.getNombre() + " " +
 					estudianteSaveDTO.getApellidoPaterno() + " " +
 					estudianteSaveDTO.getApellidoMaterno());
 		}

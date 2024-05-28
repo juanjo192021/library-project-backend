@@ -38,22 +38,25 @@ public class LibroServiceImpl implements ILibroService{
 	private IPasilloRepository pasilloRepository;
 	
 	@Override
-	public List<Libro> getListLibros(){
+	public List<Libro> getAll(){
 		return libroRepository.findAll();
 	}
 	
 	@Override
-	public LibroDTO buscarPorId(Long id) {
-		Libro libro =  libroRepository.findById(id).orElse(null);
+	public LibroDTO findById(Long id) {
+		Libro libro =  libroRepository.findById(id).
+				orElseThrow(() -> new ResourceNotFoundException("libro", "id", id));
 		LibroDTO libroDTO = mapper.map(libro, LibroDTO.class);
 		return libroDTO;
 	}
 	
 	@Override
-	public LibroDTO guardar(LibroSaveDTO libroSaveDTO) {
+	public LibroDTO save(LibroSaveDTO libroSaveDTO) {
 		
-		Autor autorModel = autorRepository.findById(libroSaveDTO.getAutor()).orElse(null);
-		Pasillo pasilloModel = pasilloRepository.findById(libroSaveDTO.getPasillo()).orElse(null);
+		Autor autorModel = autorRepository.findById(libroSaveDTO.getAutor()).
+				orElseThrow(() -> new ResourceNotFoundException("autor", "id", libroSaveDTO.getAutor()));
+		Pasillo pasilloModel = pasilloRepository.findById(libroSaveDTO.getPasillo()).
+				orElseThrow(() -> new ResourceNotFoundException("pasillo", "id", libroSaveDTO.getPasillo()));
 		
 		Libro LibroModel =  mapper.map(libroSaveDTO, Libro.class);
 		LibroModel.setAutor(autorModel);
@@ -73,28 +76,18 @@ public class LibroServiceImpl implements ILibroService{
 	public LibroDTO update(LibroUpdateDTO libroUpdateDTO){
 		Libro libro = libroRepository.findById(libroUpdateDTO.getId()).
 				orElseThrow(() -> new ResourceNotFoundException("libro", "id", libroUpdateDTO.getId()));
-			
-		if(libroUpdateDTO.getTitulo() != null) {
-			libro.setTitulo(libroUpdateDTO.getTitulo()); 
-		}
-		
-		if(libroUpdateDTO.getFechaPublic() != null) {
-			libro.setFechaPublic(libroUpdateDTO.getFechaPublic()); 
-		}
-		
-		if(libroUpdateDTO.getStock() == 0) {
-			libro.setStock(libroUpdateDTO.getStock()); 
-		}
-		
-		if(libroUpdateDTO.getAutor() != null) {
-			Autor autorModel = autorRepository.findById(libroUpdateDTO.getAutor()).orElse(null);
-			libro.setAutor(autorModel); 
-		}
-		
-		if(libroUpdateDTO.getPasillo() != null) {
-			Pasillo pasilloModel = pasilloRepository.findById(libroUpdateDTO.getPasillo()).orElse(null);
-			libro.setPasillo(pasilloModel); 
-		}
+
+		libro.setTitulo(libroUpdateDTO.getTitulo());
+		libro.setFechaPublic(libroUpdateDTO.getFechaPublic());
+		libro.setStock(libroUpdateDTO.getStock());
+
+		Autor autorModel = autorRepository.findById(libroUpdateDTO.getAutor()).
+				orElseThrow(() -> new ResourceNotFoundException("autor", "id", libroUpdateDTO.getAutor()));;
+		libro.setAutor(autorModel);
+
+		Pasillo pasilloModel = pasilloRepository.findById(libroUpdateDTO.getPasillo()).
+				orElseThrow(() -> new ResourceNotFoundException("pasillo", "id", libroUpdateDTO.getPasillo()));
+		libro.setPasillo(pasilloModel);
 
 		Libro libroUdpate = libroRepository.save(libro);
 		LibroDTO libroDTO = mapper.map(libroUdpate, LibroDTO.class);
@@ -104,9 +97,8 @@ public class LibroServiceImpl implements ILibroService{
 	}
 
 	@Override
-	public void eliminar(Long id) {
-		libroRepository.deleteById(id);	
+	public LibroDTO delete(Long id) {
+		libroRepository.deleteById(id);
+		return null;
 	}
-	
-
 }
